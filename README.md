@@ -1,69 +1,209 @@
-# CodeIgniter 4 Application Starter
+# 📅 Sistema de Gestión de Horarios
 
-## What is CodeIgniter?
+Sistema web desarrollado en **CodeIgniter 4** para la gestión
+institucional de horarios con autenticación tradicional y login con
+Google.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+------------------------------------------------------------------------
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## 🚀 Funcionalidades
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+### 👤 Usuario
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+-   Inicio de sesión con email/contraseña
+-   Inicio de sesión con Google (OAuth 2.0)
+-   Carga y edición de horario semanal
+-   Cálculo automático de horas trabajadas (formato HH:MM)
+-   Visualización de estado:
+    -   🟡 Pendiente
+    -   🟢 Aprobado
+-   Bloqueo automático del horario una vez aprobado por administración
 
-## Installation & updates
+### 🛠 Administrador
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+-   Listado completo de usuarios
+-   Visualización y edición de horarios
+-   Aprobación / desaprobación de horarios
+-   Registro automático de fecha y hora de aprobación
+-   Indicadores visuales (badges) de estado
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+------------------------------------------------------------------------
 
-## Setup
+## 🏗 Tecnologías utilizadas
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+-   PHP 8+
+-   CodeIgniter 4
+-   MySQL / MariaDB
+-   Bootstrap 5
+-   Bootstrap Icons
+-   Google OAuth 2.0
+-   Git & GitHub
 
-## Important Change with index.php
+------------------------------------------------------------------------
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## ⚙️ Instalación
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+### 1️⃣ Clonar el repositorio
 
-**Please** read the user guide for a better explanation of how CI4 works!
+``` bash
+git clone https://github.com/TU-USUARIO/sistema-horarios.git
+cd sistema-horarios
+```
 
-## Repository Management
+------------------------------------------------------------------------
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### 2️⃣ Instalar dependencias
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+``` bash
+composer install
+```
 
-## Server Requirements
+------------------------------------------------------------------------
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+### 3️⃣ Configurar entorno
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+Copiar archivo base de entorno:
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+#### En macOS / Linux:
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+``` bash
+cp env .env
+```
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+#### En Windows:
+
+``` bash
+copy env .env
+```
+
+------------------------------------------------------------------------
+
+Editar el archivo `.env` y configurar:
+
+### 🔹 Base URL
+
+    app.baseURL = 'http://localhost:8080/'
+
+------------------------------------------------------------------------
+
+### 🔹 Base de datos
+
+    database.default.hostname = localhost
+    database.default.database = nombre_base_datos
+    database.default.username = root
+    database.default.password = password
+    database.default.DBDriver = MySQLi
+
+------------------------------------------------------------------------
+
+### 🔹 Zona horaria
+
+Ejemplo:
+
+    app.appTimezone = America/Argentina/Buenos_Aires
+
+------------------------------------------------------------------------
+
+### 🔹 Configuración Google OAuth (OBLIGATORIO)
+
+Agregar en `.env`:
+
+    GOOGLE_CLIENT_ID= ''
+    GOOGLE_CLIENT_SECRET= ''
+    GOOGLE_REDIRECT_URI= ''
+
+Ejemplo:
+
+    GOOGLE_CLIENT_ID= 1234567890-xxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com
+    GOOGLE_CLIENT_SECRET= GOCSPX-xxxxxxxxxxxxxxxx
+    GOOGLE_REDIRECT_URI= http://localhost:8080/auth/googleCallback
+
+⚠ Importante: - El `GOOGLE_REDIRECT_URI` debe coincidir exactamente con
+el configurado en Google Cloud Console. - Nunca subir estos valores
+reales al repositorio.
+
+------------------------------------------------------------------------
+
+## 🔐 Configurar Google Cloud Console
+
+1.  Ir a https://console.cloud.google.com/
+2.  Crear un nuevo proyecto
+3.  Habilitar "Google Identity Services"
+4.  Crear credenciales → OAuth Client ID
+5.  Tipo: Aplicación Web
+6.  Agregar:
+    -   Orígenes autorizados:\
+        `http://localhost:8080`
+    -   URIs de redirección autorizados:\
+        `http://localhost:8080/auth/googleCallback`
+7.  Copiar Client ID y Client Secret al `.env`
+
+------------------------------------------------------------------------
+
+## 🗄 Crear base de datos
+
+Crear la base de datos en MySQL y luego ejecutar:
+
+``` bash
+php spark migrate
+```
+
+------------------------------------------------------------------------
+
+## ▶ Ejecutar el proyecto
+
+``` bash
+php spark serve
+```
+
+Abrir en navegador:
+
+    http://localhost:8080
+
+------------------------------------------------------------------------
+
+## 📁 Estructura principal
+
+    app/
+     ├── Controllers/
+     ├── Models/
+     ├── Views/
+     ├── Database/Migrations/
+
+    public/
+
+------------------------------------------------------------------------
+
+## 🔒 Seguridad
+
+-   Validación de sesión por roles
+-   Protección de edición cuando el horario está aprobado
+-   Manejo seguro de checkbox booleanos
+-   Exclusión de archivos sensibles en `.gitignore`:
+    -   `/vendor`
+    -   `/writable`
+    -   `.env`
+
+------------------------------------------------------------------------
+
+## 📌 Mejoras futuras
+
+-   Registro de qué administrador aprobó
+-   Historial de cambios
+-   Notificaciones por email
+-   Dashboard con métricas
+-   Exportación a PDF
+-   Filtro avanzado en panel administrador
+
+------------------------------------------------------------------------
+
+## 👨‍💻 Autor
+
+Sistema desarrollado como solución institucional para gestión interna de
+horarios.
+
+------------------------------------------------------------------------
+
+## 📄 Licencia
+
+Uso interno / académico.
