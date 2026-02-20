@@ -37,7 +37,6 @@ Google.
 -   Bootstrap 5
 -   Bootstrap Icons
 -   Google OAuth 2.0
--   Git & GitHub
 
 ------------------------------------------------------------------------
 
@@ -46,8 +45,8 @@ Google.
 ### 1️⃣ Clonar el repositorio
 
 ``` bash
-git clone https://github.com/TU-USUARIO/sistema-horarios.git
-cd sistema-horarios
+git clone https://github.com/emprejorge/sils-horario-de-trabajo.git
+cd sils-horario-de-trabajo
 ```
 
 ------------------------------------------------------------------------
