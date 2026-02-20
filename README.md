@@ -99,7 +99,7 @@ Editar el archivo `.env` y configurar:
 
 Ejemplo:
 
-    app.appTimezone = America/Argentina/Buenos_Aires
+    app.appTimezone = America/Santiago
 
 ------------------------------------------------------------------------
 
