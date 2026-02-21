@@ -8,6 +8,21 @@ use CodeIgniter\I18n\Time;
 
 class Admin extends BaseController
 {
+
+    public function index()
+    {
+        $usuarioModel = new UserModel();
+        $horarioModel = new HorarioModel();
+
+        $data = [
+            'totalUsuarios' => $usuarioModel->countAll(),
+            'totalPendientes' => $horarioModel->where('approved', 0)->countAllResults(),
+            'totalAprobados' => $horarioModel->where('approved', 1)->countAllResults(),
+        ];
+
+        return view('admin/dashboard', $data);
+    }
+
     private function verificarAdmin()
     {
         if (!session()->get('user')['logged_in'] || session()->get('user')['role'] != 1) {

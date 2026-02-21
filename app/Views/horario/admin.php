@@ -1,95 +1,7 @@
+<?= $this->extend('admin/template') ?>
+
+<?= $this->section('content') ?>
 <?php $bloqueado = $horario['approved'] ? true : false; ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Mis Horarios</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f1f5f9;
-        }
-
-        .navbar-custom {
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .user-card {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.4);
-        }
-
-        .card-dashboard {
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        .table-modern th {
-            background: #f8fafc;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-aprobado {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .status-pendiente {
-            background: #fef9c3;
-            color: #854d0e;
-        }
-    </style>
-</head>
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light navbar-custom px-4">
-    <span class="navbar-brand fw-bold">
-        <i class="bi bi-calendar2-week-fill text-primary"></i>
-        Sistema de Horarios
-    </span>
-
-    <div class="ms-auto d-flex align-items-center gap-3">
-        <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
-        <img src="<?= session()->get('user')['avatar'] ?>" class="rounded-circle" width="40">
-        <a href="/logout" class="btn btn-outline-danger btn-sm">
-            <i class="bi bi-box-arrow-right"></i> Salir
-        </a>
-    </div>
-</nav>
-
-<div class="container mt-5">
-    <div class="row g-4">
-
-        
-
         <!-- TABLA HORARIOS -->
         <div class="col-lg-12">
             <div class="card card-dashboard p-4">
@@ -248,9 +160,6 @@ $dias = [
             </div>
         </div>
 
-    </div>
-</div>
-
 
 
 
@@ -357,5 +266,4 @@ document.querySelectorAll('.horario-input').forEach(input => {
 });
 
 </script>
-</body>
-</html>
+<?php $this->endSection() ?>

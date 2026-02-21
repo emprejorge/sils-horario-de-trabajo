@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Usuarios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<?= $this->extend('admin/template') ?>
 
-<div class="container py-4">
+<?= $this->section('content') ?>
 
     <h3>Lista de Usuarios</h3>
 
@@ -71,7 +65,4 @@
         </tbody>
     </table>
 
-</div>
-
-</body>
-</html>
+<?= $this->endSection() ?>

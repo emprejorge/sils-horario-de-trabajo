@@ -122,6 +122,6 @@ class Auth extends Controller
             'logged_in' => true
         ]);
 
-        return redirect()->to('/dashboard');
+        return redirect()->to('/horario');
     }
 }

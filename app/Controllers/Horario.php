@@ -33,9 +33,16 @@ class Horario extends BaseController
                 ->first();
         }
 
-        return view('horario/index', [
-            'horario' => $horario
-        ]);
+        if(session()->get('user')['role']==1    ){
+            return view('horario/admin', [
+                'horario' => $horario
+            ]);
+        }else{
+            return view('horario/index', [
+                'horario' => $horario
+            ]);
+        }
+
     }
 
     public function save()
@@ -70,6 +77,8 @@ class Horario extends BaseController
 
             $horarioModel->update($horario['id'], $data);
         }
+
+        
 
         return redirect()->to('/horario')
             ->with('success', 'Horario guardado correctamente');

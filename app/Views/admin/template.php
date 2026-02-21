@@ -108,21 +108,24 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
     <div class="brand">
-        <i class="bi bi-shield-lock-fill text-primary"></i>
-        Admin Panel
+        <i class="bi bi-calendar2-check text-primary"></i>
+        SILS: Horarios
     </div>
 
-    <a href="#" class="active">
+    <a href="<?= base_url('admin') ?>" class="<?= url_is('admin') ? 'active' : '' ?>">
         <i class="bi bi-speedometer2 me-2"></i> Dashboard
     </a>
 
-    <a href="<?= base_url('horario') ?>">
+    <a href="<?= base_url('horario') ?>" class="<?= url_is('horario') ? 'active' : '' ?>">
         <i class="bi bi-calendar2-week me-2"></i> Mi horario
     </a>
 
-    <a href="<?= base_url('admin/usuarios') ?>">
+    <a href="<?= base_url('admin/usuarios') ?>" class="<?= url_is('admin/usuarios')  ? 'active' : '' ?> <?= url_is('admin/horario/*')  ? 'active' : '' ?>">
         <i class="bi bi-people me-2"></i> Usuarios
     </a>
+
+
+    
 </div>
 
 <!-- MAIN -->
@@ -135,9 +138,9 @@
         </h5>
 
         <div class="d-flex align-items-center gap-3">
-            <span class="fw-semibold">Administrador</span>
+            <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
 
-            <img src="https://i.pravatar.cc/40"
+            <img src="<?= session()->get('user')['avatar'] ?>" alt="Avatar"
                  class="rounded-circle"
                  width="40">
 
@@ -149,55 +152,7 @@
 
     <!-- CONTENIDO DINÁMICO -->
     <div class="card card-dashboard p-4">
-        <h5 class="fw-bold mb-4">
-            <i class="bi bi-table text-primary"></i>
-            Tabla de Ejemplo
-        </h5>
-
-        <div class="table-responsive">
-            <table class="table table-hover table-modern align-middle">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Rol</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Pérez</td>
-                        <td>Docente</td>
-                        <td><span class="badge bg-success">Activo</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-primary">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td>María López</td>
-                        <td>Administrativo</td>
-                        <td><span class="badge bg-warning text-dark">Pendiente</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-primary">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+       <?= $this->renderSection('content') ?>
     </div>
 
 </div>

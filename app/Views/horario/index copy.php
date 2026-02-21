@@ -3,102 +3,61 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mis Horarios</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi Horario</title>
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f1f5f9;
-        }
-
-        .navbar-custom {
-            background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .user-card {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.4);
-        }
-
-        .card-dashboard {
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        .table-modern th {
-            background: #f8fafc;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-aprobado {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .status-pendiente {
-            background: #fef9c3;
-            color: #854d0e;
-        }
-    </style>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light navbar-custom px-4">
-    <span class="navbar-brand fw-bold">
-        <i class="bi bi-calendar2-week-fill text-primary"></i>
-        Sistema de Horarios
-    </span>
+<div class="container py-4">
 
-    <div class="ms-auto d-flex align-items-center gap-3">
-        <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
-        <img src="<?= session()->get('user')['avatar'] ?>" class="rounded-circle" width="40">
-        <a href="/logout" class="btn btn-outline-danger btn-sm">
-            <i class="bi bi-box-arrow-right"></i> Salir
-        </a>
-    </div>
-</nav>
+    <div class="card shadow-sm">
+        <div class="card-body">
 
-<div class="container mt-5">
-    <div class="row g-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">
+                    <i class="bi bi-calendar-week"></i> Mi Horario Semanal
+                </h4>
 
-        
+                 <?php if ($horario['approved']): ?>
+                    <span class="badge bg-success fs-6">
+                        <i class="bi bi-check-circle"></i>
+                        Aprobado por Convivencia Escolar  el <?= date('d/m/Y H:i', strtotime($horario['approved_at'])) ?>
+                    </span>
+                <?php else: ?>
+                    <span class="badge bg-warning text-dark fs-6">
+                        <i class="bi bi-clock-history"></i>
+                        Pendiente de aprobación
+                    </span>
+                <?php endif; ?>
 
-        <!-- TABLA HORARIOS -->
-        <div class="col-lg-12">
-            <div class="card card-dashboard p-4">
-                <h5 class="fw-bold mb-4">
-                    <i class="bi bi-clock-history text-primary"></i>
-                    Mi horario de trabajo
-                </h5>
 
-                <form method="post" action="/horario/save">
+                <div>
+                    <img src="<?= session()->get('user')['avatar'] ?>" 
+                         class="rounded-circle me-2" 
+                         width="40">
+                    <strong><?= session()->get('user')['name'] ?></strong>
+                </div>
+            </div>
+
+            <?php if(session('success')): ?>
+                <div class="alert alert-success">
+                    <i class="bi bi-check-circle"></i>
+                    <?= session('success') ?>
+                </div>
+            <?php endif; ?>
+            <?php if(session('error')): ?>
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <?= session('error') ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="post" action="/horario/save">
 
                 <div class="table-responsive">
                     <table class="table table-bordered text-center align-middle">
@@ -244,15 +203,14 @@ $dias = [
                 </div>
 
             </form>
-                
-            </div>
+
         </div>
-
     </div>
+    
 </div>
-
-
-
+<div class="text-center">
+    <a href="<?= base_url('logout') ?>" class="btn btn-primary">Cerrar sesión</a>
+</div>
 
 <script>
 

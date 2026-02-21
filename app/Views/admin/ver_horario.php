@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Mi Horario</title>
+<?= $this->extend('admin/template') ?>
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-
-<div class="container py-4">
+<?= $this->section('content') ?>
 
     <div class="card shadow-sm">
         <div class="card-body">
@@ -196,7 +184,6 @@ $dias = [
         </div>
     </div>
 
-</div>
 
 <script>
 
@@ -301,5 +288,4 @@ document.querySelectorAll('.horario-input').forEach(input => {
 });
 
 </script>
-</body>
-</html>
+<?php $this->endSection() ?>
