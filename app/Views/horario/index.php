@@ -12,6 +12,28 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-32x32.jpg" sizes="32x32" />
+    <link rel="icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-192x192.jpg" sizes="192x192" />
+    <link rel="apple-touch-icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-180x180.jpg" />
+    <meta name="msapplication-TileImage" content="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-270x270.jpg" />
+
+    <!-- Open Graph básico -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SILS - Sistema de registro de horas laborales">
+    <meta property="og:description" content="Plataforma institucional diseñada para registrar, revisar y aprobar horarios laborales de manera eficiente. Garantiza control administrativo y validación oficial.">
+    <meta property="og:url" content="https://horas.scuolaitalianalaserena.cl/index.php/login">
+    <meta property="og:image" content="https://scuolaitalianalaserena.cl/logos/scuola-whatsapp.jpg">
+
+    <!-- Opcional pero recomendado -->
+    <meta property="og:site_name" content="SILS - Sistema de registro de horas laborales">
+
+    <!-- Twitter (WhatsApp a veces lo usa como fallback) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SILS - Sistema de registro de horas laborales">
+    <meta name="twitter:description" content="Plataforma institucional diseñada para registrar, revisar y aprobar horarios laborales de manera eficiente. Garantiza control administrativo y validación oficial.">
+    <meta name="twitter:image" content="https://scuolaitalianalaserena.cl/logos/scuola-whatsapp.jpg">
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -73,12 +95,12 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom px-4">
     <span class="navbar-brand fw-bold">
         <i class="bi bi-calendar2-week-fill text-primary"></i>
-        Sistema de Horarios
+        Sistema de Horas de Trabajo
     </span>
 
     <div class="ms-auto d-flex align-items-center gap-3">
         <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
-        <img src="<?= session()->get('user')['avatar'] ?>" class="rounded-circle" width="40">
+        <img src="<?= base_url(session()->get('user')['avatar']) ?>" class="rounded-circle" width="40">
         <a href="/logout" class="btn btn-outline-danger btn-sm">
             <i class="bi bi-box-arrow-right"></i> Salir
         </a>
@@ -87,32 +109,20 @@
 
 <div class="container mt-5">
     <div class="row g-4">
+<!-- HORARIO -->
 
-        
 
-        <!-- TABLA HORARIOS -->
-        <div class="col-lg-12">
-            <div class="card card-dashboard p-4">
-                <h5 class="fw-bold mb-4">
-                    <i class="bi bi-clock-history text-primary"></i>
-                    Mi horario de trabajo
-                </h5>
+<?php $bloqueado = $horario['approved'] ? true : false; ?>
 
-                <form method="post" action="/horario/save">
+<div class="col-lg-12">
+<div class="card card-dashboard p-4">
 
-                <div class="table-responsive">
-                    <table class="table table-bordered text-center align-middle">
-                        <thead class="table-dark">
-                            <tr>
-                                <th></th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+<h5 class="fw-bold mb-4">
+    <i class="bi bi-clock-history text-primary"></i>
+    Mi horario de trabajo
+</h5>
+
+<form method="post" action="/horario/save">
 
 <?php
 $dias = [
@@ -124,137 +134,170 @@ $dias = [
 ];
 ?>
 
+<div class="table-responsive">
+<table class="table table-bordered text-center align-middle">
+
+<thead class="table-dark">
+<tr>
+    <th></th>
+    <?php foreach($dias as $key => $dia): ?>
+        <th>
+            <div class="d-flex flex-column align-items-center">
+                <span><?= $dia ?></span>
+
+                <?php if (!$bloqueado): ?>
+                    <button type="button"
+                        class="btn btn-sm btn-outline-light mt-1 copiar-siguiente"
+                        data-from="<?= $key ?>"
+                        title="Copiar día completo al siguiente">
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                <?php endif; ?>
+            </div>
+        </th>
+    <?php endforeach; ?>
+</tr>
+</thead>
+
+<tbody>
+
 <!-- Entrada Mañana -->
 <tr>
-    <td class="fw-bold bg-light">
-        <i class="bi bi-sunrise"></i> Entrada Mañana
-    </td>
-    <?php foreach($dias as $key => $dia): ?>
-        <td>
-            <input type="time"
-                class="form-control horario-input"
-                data-dia="<?= $key ?>"
-                data-row="1"
-                name="<?= $key ?>_entrada_manana"
-                value="<?= $horario[$key.'_entrada_manana'] ?>"
-                <?= $bloqueado ? 'disabled' : '' ?>>
-        </td>
-    <?php endforeach; ?>
+<td class="fw-bold bg-light">
+    <i class="bi bi-sunrise"></i> Entrada Mañana
+    <?php if (!$bloqueado): ?>
+        <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="entrada_manana" title="Copiar entrada mañana del lunes a toda la semana">
+            <i class="bi bi-files"></i>
+        </button>
+    <?php endif; ?>
+</td>
+<?php foreach($dias as $key => $dia): ?>
+<td>
+<input type="time"
+    class="form-control horario-input"
+    name="<?= $key ?>_entrada_manana"
+    value="<?= $horario[$key.'_entrada_manana'] ?>"
+    <?= $bloqueado ? 'disabled' : '' ?>>
+</td>
+<?php endforeach; ?>
 </tr>
 
 <!-- Salida Mañana -->
 <tr>
-    <td class="fw-bold bg-light">
-        <i class="bi bi-sun"></i> Salida Mañana
-    </td>
-    <?php foreach($dias as $key => $dia): ?>
-        <td>
-            
-            <input type="time"
-                    class="form-control horario-input"
-                    data-dia="<?= $key ?>"
-                    data-row="2"
-                    name="<?= $key ?>_salida_manana"
-                    value="<?= $horario[$key.'_salida_manana'] ?>"
-                    <?= $bloqueado ? 'disabled' : '' ?>>
-        </td>
-    <?php endforeach; ?>
+<td class="fw-bold bg-light">
+    <i class="bi bi-sun"></i> Salida Mañana
+    <?php if (!$bloqueado): ?>
+        <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="salida_manana" title="Copiar salida mañana del lunes a toda la semana">
+            <i class="bi bi-files"></i>
+        </button>
+    <?php endif; ?>
+</td>
+<?php foreach($dias as $key => $dia): ?>
+<td>
+<input type="time"
+    class="form-control horario-input"
+    name="<?= $key ?>_salida_manana"
+    value="<?= $horario[$key.'_salida_manana'] ?>"
+    <?= $bloqueado ? 'disabled' : '' ?>>
+</td>
+<?php endforeach; ?>
 </tr>
 
-<!-- Total Mañana -->
 <tr class="table-secondary">
-    <td class="fw-bold">Total Mañana</td>
-    <?php foreach($dias as $key => $dia): ?>
-        <td id="<?= $key ?>_total_manana">0</td>
-    <?php endforeach; ?>
+<td class="fw-bold">Total Mañana</td>
+<?php foreach($dias as $key => $dia): ?>
+<td id="<?= $key ?>_total_manana">0</td>
+<?php endforeach; ?>
 </tr>
 
 <!-- Entrada Tarde -->
 <tr>
-    <td class="fw-bold bg-light">
-        <i class="bi bi-brightness-high"></i> Entrada Tarde
-    </td>
-    <?php foreach($dias as $key => $dia): ?>
-        <td>
-            <input type="time"
-                    class="form-control horario-input"
-                    data-dia="<?= $key ?>"
-                    data-row="3"
-                    name="<?= $key ?>_entrada_tarde"
-                    value="<?= $horario[$key.'_entrada_tarde'] ?>"
-                    <?= $bloqueado ? 'disabled' : '' ?>>
-            
-        </td>
-    <?php endforeach; ?>
+<td class="fw-bold bg-light">
+    <i class="bi bi-brightness-high"></i> Entrada Tarde
+    <?php if (!$bloqueado): ?>
+        <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="entrada_tarde" title="Copiar entrada tarde del lunes a toda la semana">
+            <i class="bi bi-files"></i>
+        </button>
+    <?php endif; ?>
+</td>
+<?php foreach($dias as $key => $dia): ?>
+<td>
+<input type="time"
+    class="form-control horario-input"
+    name="<?= $key ?>_entrada_tarde"
+    value="<?= $horario[$key.'_entrada_tarde'] ?>"
+    <?= $bloqueado ? 'disabled' : '' ?>>
+</td>
+<?php endforeach; ?>
 </tr>
 
 <!-- Salida Tarde -->
 <tr>
-    <td class="fw-bold bg-light">
-        <i class="bi bi-sunset"></i> Salida Tarde
-    </td>
-    <?php foreach($dias as $key => $dia): ?>
-        <td>
-            <input type="time"
-                    class="form-control horario-input"
-                    data-dia="<?= $key ?>"
-                    data-row="4"
-                    name="<?= $key ?>_salida_tarde"
-                    value="<?= $horario[$key.'_salida_tarde'] ?>"
-                    <?= $bloqueado ? 'disabled' : '' ?>>
-        </td>
-    <?php endforeach; ?>
+<td class="fw-bold bg-light">
+    <i class="bi bi-sunset"></i> Salida Tarde
+    <?php if (!$bloqueado): ?>
+        <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="salida_tarde" title="Copiar salida tarde del lunes a toda la semana">
+            <i class="bi bi-files"></i>
+        </button>
+    <?php endif; ?>
+</td>
+<?php foreach($dias as $key => $dia): ?>
+<td>
+<input type="time"
+    class="form-control horario-input"
+    name="<?= $key ?>_salida_tarde"
+    value="<?= $horario[$key.'_salida_tarde'] ?>"
+    <?= $bloqueado ? 'disabled' : '' ?>>
+</td>
+<?php endforeach; ?>
 </tr>
 
-<!-- Total Tarde -->
 <tr class="table-secondary">
-    <td class="fw-bold">Total Tarde</td>
-    <?php foreach($dias as $key => $dia): ?>
-        <td id="<?= $key ?>_total_tarde">0</td>
-    <?php endforeach; ?>
+<td class="fw-bold">Total Tarde</td>
+<?php foreach($dias as $key => $dia): ?>
+<td id="<?= $key ?>_total_tarde">0</td>
+<?php endforeach; ?>
 </tr>
 
-<!-- Total Día -->
 <tr class="table-primary">
-    <td class="fw-bold">Total Día</td>
-    <?php foreach($dias as $key => $dia): ?>
-        <td id="<?= $key ?>_total_dia">0</td>
-    <?php endforeach; ?>
+<td class="fw-bold">Total Día</td>
+<?php foreach($dias as $key => $dia): ?>
+<td id="<?= $key ?>_total_dia">0</td>
+<?php endforeach; ?>
 </tr>
 
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="text-end mt-3">
-                    <h5>
-                        <i class="bi bi-clock-history"></i>
-                        Total Semanal:
-                        <span id="total_semanal" class="badge bg-primary fs-6">0</span>
-                        horas
-                    </h5>
-                </div>
-
-                <div class="text-end mt-3">
-                    <?php if (!$bloqueado): ?>
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-save"></i> Guardar
-                        </button>
-                    <?php endif; ?>
-                </div>
-
-            </form>
-                
-            </div>
-        </div>
-
-    </div>
+</tbody>
+</table>
 </div>
 
+<div class="text-end mt-3">
+<h5>
+    <i class="bi bi-clock-history"></i>
+    Total Semanal:
+    <span id="total_semanal" class="badge bg-primary fs-6">0</span>
+    horas
+</h5>
+</div>
 
+<div class="text-end mt-3">
+<?php if (!$bloqueado): ?>
+<button type="submit" class="btn btn-success">
+    <i class="bi bi-save"></i> Guardar
+</button>
+<?php endif; ?>
+</div>
 
+</form>
+</div>
+</div>
 
 <script>
+
+const diasOrden = ['lun','mar','mie','jue','vie'];
+
+/* =========================
+   CALCULO ORIGINAL (NO TOCADO)
+========================= */
 
 function calcularMinutos(inicio, fin) {
     if (!inicio || !fin) return 0;
@@ -269,7 +312,6 @@ function calcularMinutos(inicio, fin) {
 }
 
 function formatearHoras(minutosTotales) {
-
     if (minutosTotales <= 0) return "0:00";
 
     let horas = Math.floor(minutosTotales / 60);
@@ -280,10 +322,9 @@ function formatearHoras(minutosTotales) {
 
 function recalcular() {
 
-    let dias = ['lun','mar','mie','jue','vie'];
     let totalSemanal = 0;
 
-    dias.forEach(dia => {
+    diasOrden.forEach(dia => {
 
         let em = document.querySelector(`[name="${dia}_entrada_manana"]`).value;
         let sm = document.querySelector(`[name="${dia}_salida_manana"]`).value;
@@ -309,53 +350,69 @@ document.querySelectorAll("input[type='time']")
 
 window.onload = recalcular;
 
-</script>
+/* =========================
+   COPIAR DIA COMPLETO AL SIGUIENTE
+========================= */
 
+document.querySelectorAll('.copiar-siguiente').forEach(btn => {
 
+    btn.addEventListener('click', function() {
 
-<script>
+        const fromDia = this.dataset.from;
+        const index = diasOrden.indexOf(fromDia);
 
-document.querySelectorAll('.horario-input').forEach(input => {
+        if (index === -1 || index === diasOrden.length - 1) return;
 
-    input.addEventListener('keydown', function(e) {
+        const toDia = diasOrden[index + 1];
 
-        if (e.key === 'Tab' && !e.shiftKey) {
-            e.preventDefault();
+        ['entrada_manana','salida_manana','entrada_tarde','salida_tarde']
+        .forEach(tipo => {
+            let from = document.querySelector(`[name="${fromDia}_${tipo}"]`);
+            let to   = document.querySelector(`[name="${toDia}_${tipo}"]`);
+            if (from && to) to.value = from.value;
+        });
 
-            let diaActual = this.dataset.dia;
-            let rowActual = parseInt(this.dataset.row);
+        recalcular();
+    });
 
-            let dias = ['lun','mar','mie','jue','vie'];
-            let indexDia = dias.indexOf(diaActual);
+});
 
-            let siguiente;
+/* =========================
+   COPIAR SOLO UNA COLUMNA DESDE LUNES
+========================= */
 
-            // Si no es la última fila (4)
-            if (rowActual < 4) {
-                siguiente = document.querySelector(
-                    `.horario-input[data-dia="${diaActual}"][data-row="${rowActual + 1}"]`
-                );
-            } 
-            else {
-                // Si es última fila → ir a siguiente día
-                if (indexDia < dias.length - 1) {
-                    let siguienteDia = dias[indexDia + 1];
+document.querySelectorAll('.copiar-columna').forEach(btn => {
 
-                    siguiente = document.querySelector(
-                        `.horario-input[data-dia="${siguienteDia}"][data-row="1"]`
-                    );
-                }
-            }
+    btn.addEventListener('click', function() {
 
-            if (siguiente) {
-                siguiente.focus();
-            }
-        }
+        const tipo = this.dataset.tipo;
 
+        diasOrden.forEach(dia => {
+
+            if (dia === 'lun') return;
+
+            let from = document.querySelector(`[name="lun_${tipo}"]`);
+            let to   = document.querySelector(`[name="${dia}_${tipo}"]`);
+
+            if (from && to) to.value = from.value;
+        });
+
+        recalcular();
     });
 
 });
 
 </script>
+
+
+        
+
+
+<!-- .HORARIO -->
+    </div>
+</div>
+<!-- Bootstrap JS (necesario para Toast, Tooltip, Modal, etc) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<?= $this->include('components/toast') ?>
 </body>
 </html>

@@ -85,6 +85,8 @@ class Auth extends Controller
 
         // Buscar usuario
         $user = $userModel->where('email', $email)->first();
+        $avatar = $user ? $user['avatar'] : null; // Mantener avatar existente si el usuario ya existe, o usar el nuevo de Google si es nuevo
+
 
         if (!$user) {
             if($email == 'informatica@scuolaitalianalaserena.cl') {
@@ -93,6 +95,13 @@ class Auth extends Controller
                 $role = 2; // Usuario normal
             }
 
+            $avatarUrl = $data->picture;
+            $avatarContent = file_get_contents($avatarUrl);
+
+            $fileName = 'avatar_' . time() . '.jpg';
+            file_put_contents(FCPATH . 'uploads/avatars/' . $fileName, $avatarContent);
+
+            $avatar = 'uploads/avatars/' . $fileName;
 
             // Crear si no existe
             $userId = $userModel->insert([
@@ -100,16 +109,11 @@ class Auth extends Controller
                 'first_name' => $data->givenName,
                 'last_name'  => $data->familyName,
                 'email'      => $email,
-                'avatar'     => $data->picture,
+                'avatar'     => $avatar,
                 'role'       => $role
             ]);
 
             $user = $userModel->find($userId);
-        }else {
-            // Actualizar el avatar cada vez que inicie sesión
-            $userModel->update($user['id'], [
-                'avatar' => $data->picture
-            ]);
         }
 
         // Guardar sesión real
@@ -117,7 +121,7 @@ class Auth extends Controller
             'id'    => $user['id'],
             'name'  => $user['first_name'] . ' ' . $user['last_name'],
             'email' => $user['email'],
-            'avatar' => $user['avatar'],
+            'avatar' => $avatar,
             'role'  => $user['role'],
             'logged_in' => true
         ]);

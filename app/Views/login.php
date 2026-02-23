@@ -14,6 +14,29 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-32x32.jpg" sizes="32x32" />
+    <link rel="icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-192x192.jpg" sizes="192x192" />
+    <link rel="apple-touch-icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-180x180.jpg" />
+    <meta name="msapplication-TileImage" content="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-270x270.jpg" />
+
+    <!-- Open Graph básico -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SILS - Sistema de registro de horas laborales">
+    <meta property="og:description" content="Plataforma institucional diseñada para registrar, revisar y aprobar horarios laborales de manera eficiente. Garantiza control administrativo y validación oficial.">
+    <meta property="og:url" content="https://horas.scuolaitalianalaserena.cl/index.php/login">
+    <meta property="og:image" content="https://scuolaitalianalaserena.cl/logos/scuola-whatsapp.jpg">
+
+    <!-- Opcional pero recomendado -->
+    <meta property="og:site_name" content="SILS - Sistema de registro de horas laborales">
+
+    <!-- Twitter (WhatsApp a veces lo usa como fallback) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SILS - Sistema de registro de horas laborales">
+    <meta name="twitter:description" content="Plataforma institucional diseñada para registrar, revisar y aprobar horarios laborales de manera eficiente. Garantiza control administrativo y validación oficial.">
+    <meta name="twitter:image" content="https://scuolaitalianalaserena.cl/logos/scuola-whatsapp.jpg">
+
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -159,7 +182,7 @@
 
     <!-- PANEL IZQUIERDO -->
     <div class="left-panel">
-        <h1>Sistema de Gestión de Horarios</h1>
+        <h1>Sistema de registro de<br/>horas laborales</h1>
         <p>
             Plataforma institucional diseñada para registrar,
             revisar y aprobar horarios laborales de manera eficiente.
@@ -179,7 +202,7 @@
 
             <!-- LOGO PLACEHOLDER 109x146 -->
             <div class="institution-logo">
-                Logo<br>109x146
+                <img src="https://www.scuolaitalianalaserena.cl/logos/logo-chico-fondo-blanco.jpg">
             </div>
 
             <h5 class="mb-3 fw-semibold">Acceso Institucional</h5>
@@ -192,7 +215,7 @@
             </a>
 
             <div class="footer-text">
-                Acceso exclusivo para personal autorizado
+                Acceso exclusivo para personal de la <br/>Scuola Italiana de La Serena
             </div>
 
         </div>

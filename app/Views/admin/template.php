@@ -10,6 +10,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-32x32.jpg" sizes="32x32" />
+    <link rel="icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-192x192.jpg" sizes="192x192" />
+    <link rel="apple-touch-icon" href="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-180x180.jpg" />
+    <meta name="msapplication-TileImage" content="https://scuolaitalianalaserena.cl/wp-content/uploads/2024/09/cropped-favicon-270x270.jpg" />
+
+    <!-- Open Graph básico -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SILS - Sistema de registro de horas laborales">
+    <meta property="og:description" content="Plataforma institucional diseñada para registrar, revisar y aprobar horarios laborales de manera eficiente. Garantiza control administrativo y validación oficial.">
+    <meta property="og:url" content="https://horas.scuolaitalianalaserena.cl/index.php/login">
+    <meta property="og:image" content="https://scuolaitalianalaserena.cl/logos/scuola-whatsapp.jpg">
+
+    <!-- Opcional pero recomendado -->
+    <meta property="og:site_name" content="SILS - Sistema de registro de horas laborales">
+
+    <!-- Twitter (WhatsApp a veces lo usa como fallback) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SILS - Sistema de registro de horas laborales">
+    <meta name="twitter:description" content="Plataforma institucional diseñada para registrar, revisar y aprobar horarios laborales de manera eficiente. Garantiza control administrativo y validación oficial.">
+    <meta name="twitter:image" content="https://scuolaitalianalaserena.cl/logos/scuola-whatsapp.jpg">
+
+
+
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -109,7 +134,7 @@
 <div class="sidebar">
     <div class="brand">
         <i class="bi bi-calendar2-check text-primary"></i>
-        SILS: Horarios
+        SILS: Horas
     </div>
 
     <a href="<?= base_url('admin') ?>" class="<?= url_is('admin') ? 'active' : '' ?>">
@@ -140,7 +165,7 @@
         <div class="d-flex align-items-center gap-3">
             <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
 
-            <img src="<?= session()->get('user')['avatar'] ?>" alt="Avatar"
+            <img src="<?= base_url(session()->get('user')['avatar']) ?>" alt="Avatar"
                  class="rounded-circle"
                  width="40">
 
@@ -157,5 +182,8 @@
 
 </div>
 
+<!-- Bootstrap JS (necesario para Toast, Tooltip, Modal, etc) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<?= $this->include('components/toast') ?>
 </body>
 </html>
