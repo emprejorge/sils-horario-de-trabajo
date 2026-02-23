@@ -293,4 +293,106 @@ document.querySelectorAll('.copiar-columna').forEach(btn => {
 
 </script>
 
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const tiposOrden = [
+        'entrada_manana',
+        'salida_manana',
+        'entrada_tarde',
+        'salida_tarde'
+    ];
+
+    const inputs = Array.from(document.querySelectorAll('.horario-input'));
+
+    // Si no hay inputs editables, salir
+    const editables = inputs.filter(i => !i.disabled);
+    if (editables.length === 0) return;
+
+    inputs.forEach(input => {
+
+        input.addEventListener('keydown', function(e) {
+
+            if (e.key !== 'Tab') return;
+
+            const partes = this.name.split('_');
+            const diaActual = partes[0];
+            const tipoActual = partes.slice(1).join('_');
+
+            const indexDia = diasOrden.indexOf(diaActual);
+            const indexTipo = tiposOrden.indexOf(tipoActual);
+
+            let siguiente = null;
+
+            // =========================
+            // TAB NORMAL (↓)
+            // =========================
+            if (!e.shiftKey) {
+
+                // Bajar dentro del mismo día
+                if (indexTipo < tiposOrden.length - 1) {
+
+                    const siguienteTipo = tiposOrden[indexTipo + 1];
+
+                    siguiente = document.querySelector(
+                        `[name="${diaActual}_${siguienteTipo}"]:not([disabled])`
+                    );
+
+                } else {
+
+                    // Última fila → siguiente día
+                    if (indexDia < diasOrden.length - 1) {
+
+                        const siguienteDia = diasOrden[indexDia + 1];
+
+                        siguiente = document.querySelector(
+                            `[name="${siguienteDia}_entrada_manana"]:not([disabled])`
+                        );
+                    }
+                }
+            }
+
+            // =========================
+            // SHIFT + TAB (↑)
+            // =========================
+            else {
+
+                // Subir dentro del mismo día
+                if (indexTipo > 0) {
+
+                    const anteriorTipo = tiposOrden[indexTipo - 1];
+
+                    siguiente = document.querySelector(
+                        `[name="${diaActual}_${anteriorTipo}"]:not([disabled])`
+                    );
+
+                } else {
+
+                    // Primera fila → ir al día anterior
+                    if (indexDia > 0) {
+
+                        const diaAnterior = diasOrden[indexDia - 1];
+
+                        siguiente = document.querySelector(
+                            `[name="${diaAnterior}_salida_tarde"]:not([disabled])`
+                        );
+                    }
+                }
+            }
+
+            // Si existe siguiente, cancelar comportamiento normal
+            if (siguiente) {
+                e.preventDefault();
+                siguiente.focus();
+            }
+
+        });
+
+    });
+
+});
+</script>
+
 <?php $this->endSection() ?>

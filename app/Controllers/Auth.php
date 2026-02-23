@@ -126,6 +126,10 @@ class Auth extends Controller
             'logged_in' => true
         ]);
 
+        if($user['role'] == 1) {
+            return redirect()->to('/admin');
+
+        }
         return redirect()->to('/horario');
     }
 }
