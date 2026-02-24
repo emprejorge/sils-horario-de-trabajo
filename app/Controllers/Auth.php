@@ -11,7 +11,7 @@ class Auth extends Controller
     public function index()
     {
         if (session()->get('user')) {
-            return redirect()->to('/dashboard');
+            return redirect()->to('/horario');
         }
 
         return redirect()->to('/login');

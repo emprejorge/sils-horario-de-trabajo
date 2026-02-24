@@ -122,6 +122,19 @@
     Mi horario de trabajo
 </h5>
 
+ <?php if ($horario['approved']): ?>
+                    <span class="badge bg-success fs-6">
+                        <i class="bi bi-check-circle"></i>
+                        Aprobado por Convivencia Escolar  el <?= date('d/m/Y H:i', strtotime($horario['approved_at'])) ?>
+                    </span>
+                <?php else: ?>
+                    <span class="badge bg-warning text-dark fs-6">
+                        <i class="bi bi-clock-history"></i>
+                        Pendiente de aprobación
+                    </span>
+                <?php endif; ?>
+
+                <br>
 <form method="post" action="/horario/save">
 
 <?php
