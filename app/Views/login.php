@@ -203,6 +203,7 @@
             <!-- LOGO PLACEHOLDER 109x146 -->
             <div class="institution-logo">
                 <img src="https://www.scuolaitalianalaserena.cl/logos/logo-chico-fondo-blanco.jpg">
+                
             </div>
 
             <h5 class="mb-3 fw-semibold">Acceso Institucional</h5>
