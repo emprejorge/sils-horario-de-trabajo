@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Panel Administrador</title>
@@ -62,7 +63,7 @@
 
         .sidebar a {
             display: block;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
             padding: 12px 20px;
             text-decoration: none;
             transition: all 0.2s ease;
@@ -71,7 +72,7 @@
 
         .sidebar a:hover,
         .sidebar a.active {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             color: white;
             border-left: 3px solid #3b82f6;
         }
@@ -87,7 +88,7 @@
             background: white;
             padding: 15px 25px;
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
             margin-bottom: 25px;
         }
 
@@ -95,7 +96,7 @@
         .card-dashboard {
             border: none;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
 
         /* TABLE */
@@ -127,63 +128,70 @@
             }
         }
     </style>
+
+    <?= $this->renderSection('styles') ?>
 </head>
+
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <div class="brand">
-        <i class="bi bi-calendar2-check text-primary"></i>
-        SILS: Horas
-    </div>
-
-    <a href="<?= base_url('admin') ?>" class="<?= url_is('admin') ? 'active' : '' ?>">
-        <i class="bi bi-speedometer2 me-2"></i> Dashboard
-    </a>
-
-    <a href="<?= base_url('horario') ?>" class="<?= url_is('horario') ? 'active' : '' ?>">
-        <i class="bi bi-calendar2-week me-2"></i> Mi horario
-    </a>
-
-    <a href="<?= base_url('admin/usuarios') ?>" class="<?= url_is('admin/usuarios')  ? 'active' : '' ?> <?= url_is('admin/horario/*')  ? 'active' : '' ?>">
-        <i class="bi bi-people me-2"></i> Usuarios
-    </a>
-
-
-    
-</div>
-
-<!-- MAIN -->
-<div class="main-content">
-
-    <!-- NAVBAR SUPERIOR -->
-    <div class="top-navbar d-flex justify-content-between align-items-center">
-        <h5 class="mb-0 fw-semibold">
-            Panel de Administración
-        </h5>
-
-        <div class="d-flex align-items-center gap-3">
-            <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
-
-            <img src="<?= base_url(session()->get('user')['avatar']) ?>" alt="Avatar"
-                 class="rounded-circle"
-                 width="40">
-
-            <a href="/logout" class="btn btn-outline-danger btn-sm rounded-pill">
-                <i class="bi bi-box-arrow-right"></i> Salir
-            </a>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="brand">
+            <i class="bi bi-calendar2-check text-primary"></i>
+            SILS: Horas
         </div>
+
+        <a href="<?= base_url('admin') ?>" class="<?= url_is('admin') ? 'active' : '' ?>">
+            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+        </a>
+
+        <a href="<?= base_url('horario') ?>" class="<?= url_is('horario') ? 'active' : '' ?>">
+            <i class="bi bi-calendar2-week me-2"></i> Mi horario
+        </a>
+
+        <a href="<?= base_url('admin/usuarios') ?>" class="<?= url_is('admin/usuarios')  ? 'active' : '' ?> <?= url_is('admin/horario/*')  ? 'active' : '' ?>">
+            <i class="bi bi-people me-2"></i> Usuarios
+        </a>
+
+
+
     </div>
 
-    <!-- CONTENIDO DINÁMICO -->
-    <div class="card card-dashboard p-4">
-       <?= $this->renderSection('content') ?>
+    <!-- MAIN -->
+    <div class="main-content">
+
+        <!-- NAVBAR SUPERIOR -->
+        <div class="top-navbar d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-semibold">
+                Panel de Administración
+            </h5>
+
+            <div class="d-flex align-items-center gap-3">
+                <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
+
+                <img src="<?= base_url(session()->get('user')['avatar']) ?>" alt="Avatar"
+                    class="rounded-circle"
+                    width="40">
+
+                <a href="/logout" class="btn btn-outline-danger btn-sm rounded-pill">
+                    <i class="bi bi-box-arrow-right"></i> Salir
+                </a>
+            </div>
+        </div>
+
+        <!-- CONTENIDO DINÁMICO -->
+        <div class="card card-dashboard p-4">
+            <?= $this->renderSection('content') ?>
+        </div>
+
     </div>
 
-</div>
+    <!-- Bootstrap JS (necesario para Toast, Tooltip, Modal, etc) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Bootstrap JS (necesario para Toast, Tooltip, Modal, etc) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<?= $this->include('components/toast') ?>
+    <?= $this->renderSection('scripts') ?>
+
+    <?= $this->include('components/toast') ?>
 </body>
+
 </html>

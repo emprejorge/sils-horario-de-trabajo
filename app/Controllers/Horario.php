@@ -33,16 +33,15 @@ class Horario extends BaseController
                 ->first();
         }
 
-        if(session()->get('user')['role']==1    ){
+        if (session()->get('user')['role'] == 1) {
             return view('horario/admin', [
                 'horario' => $horario
             ]);
-        }else{
+        } else {
             return view('horario/index', [
                 'horario' => $horario
             ]);
         }
-
     }
 
     public function save()
@@ -61,7 +60,7 @@ class Horario extends BaseController
             ->where('user_id', $userId)
             ->first();
 
-        if ($horario['approved']==1) {
+        if ($horario['approved'] == 1) {
             return redirect()->back()
                 ->with('error', 'El horario ya fue aprobado y no puede modificarse.');
         }
@@ -72,13 +71,20 @@ class Horario extends BaseController
 
             $data = $this->request->getPost();
 
+            // Manejo correcto del checkbox
+            $is_teacher = $this->request->getPost('is_teacher') ? 1 : 0;
+
+
+
+
             // Nunca permitimos que el usuario apruebe su propio horario
             unset($data['approved']);
+            $data['is_teacher'] = $is_teacher;
 
             $horarioModel->update($horario['id'], $data);
         }
 
-        
+
 
         return redirect()->to('/horario')
             ->with('success', 'Horario guardado correctamente');

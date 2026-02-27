@@ -16,6 +16,8 @@ class HorarioModel extends Model
     protected $allowedFields = [
 
         'user_id',
+        'horas',
+        'is_teacher',
 
         // Lunes
         'lun_entrada_manana',

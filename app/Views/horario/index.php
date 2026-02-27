@@ -1,6 +1,7 @@
 <?php $bloqueado = $horario['approved'] ? true : false; ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Mis Horarios</title>
@@ -42,7 +43,7 @@
 
         .navbar-custom {
             background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .user-card {
@@ -50,20 +51,20 @@
             color: white;
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         .user-avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.4);
+            border: 3px solid rgba(255, 255, 255, 0.4);
         }
 
         .card-dashboard {
             border-radius: 20px;
             border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
 
         .table-modern th {
@@ -89,441 +90,578 @@
         }
     </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light navbar-custom px-4">
-    <span class="navbar-brand fw-bold">
-        <i class="bi bi-calendar2-week-fill text-primary"></i>
-        Sistema de Horas de Trabajo
-    </span>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom px-4">
+        <span class="navbar-brand fw-bold">
+            <i class="bi bi-calendar2-week-fill text-primary"></i>
+            Sistema de Horas de Trabajo
+        </span>
 
-    <div class="ms-auto d-flex align-items-center gap-3">
-        <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
-        <img src="<?= base_url(session()->get('user')['avatar']) ?>" class="rounded-circle" width="40">
-        <a href="/logout" class="btn btn-outline-danger btn-sm">
-            <i class="bi bi-box-arrow-right"></i> Salir
-        </a>
-    </div>
-</nav>
+        <div class="ms-auto d-flex align-items-center gap-3">
+            <span class="fw-semibold"><?= session()->get('user')['name'] ?></span>
+            <img src="<?= base_url(session()->get('user')['avatar']) ?>" class="rounded-circle" width="40">
+            <a href="/logout" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Salir
+            </a>
+        </div>
+    </nav>
 
-<div class="container mt-5">
-    <div class="row g-4">
-<!-- HORARIO -->
+    <div class="container mt-5">
+        <div class="row g-4">
+            <!-- HORARIO -->
 
 
-<?php $bloqueado = $horario['approved'] ? true : false; ?>
+            <?php $bloqueado = $horario['approved'] ? true : false; ?>
 
-<div class="col-lg-12">
-<div class="card card-dashboard p-4">
+            <div class="col-lg-12">
+                <div class="card card-dashboard p-4">
 
-<h5 class="fw-bold mb-4">
-    <i class="bi bi-clock-history text-primary"></i>
-    Mi horario de trabajo
-</h5>
+                    <h5 class="fw-bold mb-4">
+                        <i class="bi bi-clock-history text-primary"></i>
+                        Mi horario de trabajo
+                    </h5>
 
- <?php if ($horario['approved']): ?>
-                    <span class="badge bg-success fs-6">
-                        <i class="bi bi-check-circle"></i>
-                        Aprobado por Convivencia Escolar  el <?= date('d/m/Y H:i', strtotime($horario['approved_at'])) ?>
-                    </span>
-                <?php else: ?>
-                    <span class="badge bg-warning text-dark fs-6">
-                        <i class="bi bi-clock-history"></i>
-                        Pendiente de aprobación
-                    </span>
-                <?php endif; ?>
+                    <?php if ($horario['approved']): ?>
+                        <span class="badge bg-success fs-6">
+                            <i class="bi bi-check-circle"></i>
+                            Aprobado por Convivencia Escolar el <?= date('d/m/Y H:i', strtotime($horario['approved_at'])) ?>
+                        </span>
+                    <?php else: ?>
+                        <span class="badge bg-warning text-dark fs-6">
+                            <i class="bi bi-clock-history"></i>
+                            Pendiente de aprobación
+                        </span>
+                    <?php endif; ?>
 
-                <br>
-<form method="post" action="/horario/save">
+                    <br>
+                    <form method="post" action="/horario/save">
 
-<?php
-$dias = [
-    'lun' => 'Lunes',
-    'mar' => 'Martes',
-    'mie' => 'Miércoles',
-    'jue' => 'Jueves',
-    'vie' => 'Viernes'
-];
-?>
 
-<div class="table-responsive">
-<table class="table table-bordered text-center align-middle">
+                        <div class="row">
+                            <div class="col-sm-6 mb-3 mb-sm-0 pb-">
+                                <div class="card">
 
-<thead class="table-dark">
-<tr>
-    <th></th>
-    <?php foreach($dias as $key => $dia): ?>
-        <th>
-            <div class="d-flex flex-column align-items-center">
-                <span><?= $dia ?></span>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Horas de contrato</h5>
+                                        <p class="card-text">Ingresar el total de horas de contrato.</p>
+                                        <div class="col-4">
 
-                <?php if (!$bloqueado): ?>
-                    <button type="button"
-                        class="btn btn-sm btn-outline-light mt-1 copiar-siguiente"
-                        data-from="<?= $key ?>"
-                        title="Copiar día completo al siguiente">
-                        <i class="bi bi-arrow-right"></i>
-                    </button>
-                <?php endif; ?>
+                                        </div>
+
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="horas" class="col-form-label">Mis horas</label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="input-group">
+                                                    <input type="text" name="horas" class="form-control" placeholder="Ej: 44" value="<?= $horario['horas'] == 0 ? '' : $horario['horas'] ?>" <?= $bloqueado ? 'disabled' : '' ?>>
+                                                    <div class="input-group-text">hrs.</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <span id="passwordHelpInline" class="form-text">
+                                                    <span class="badge bg-danger-subtle text-danger-emphasis">Requerido *</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Profesor/a guía</h5>
+                                        <p class="card-text">Si es profesor/a guía, recordar que del total de horas de contrato, debe restar 30 minutos.
+                                            <br> <small>Ejemplo: Horas de contraro 40, en el total semanal serán 39 horas y 30 minutos (39:30).</small>
+
+                                        </p>
+
+                                        <div class="text-center mt-3">
+
+                                            <div class="form-check form-switch d-flex justify-content-center">
+                                                <input class="form-check-input"
+                                                    type="checkbox"
+                                                    name="is_teacher"
+                                                    value="1"
+                                                    <?= $horario['is_teacher'] ? 'checked' : '' ?>>
+                                                <label class="form-check-label ms-2">
+                                                    Si, soy profesor/a guía
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <?php
+                        $dias = [
+                            'lun' => 'Lunes',
+                            'mar' => 'Martes',
+                            'mie' => 'Miércoles',
+                            'jue' => 'Jueves',
+                            'vie' => 'Viernes'
+                        ];
+                        ?>
+
+                        <div class="table-responsive mt-4 rounded">
+                            <table class="table table-bordered text-center align-middle">
+
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th></th>
+                                        <?php foreach ($dias as $key => $dia): ?>
+                                            <th>
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <span><?= $dia ?></span>
+
+                                                    <?php if (!$bloqueado): ?>
+                                                        <?php if ($key !== 'vie'): ?>
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-outline-light mt-1 copiar-siguiente"
+                                                                data-from="<?= $key ?>"
+                                                                title="Copiar día completo al siguiente">
+                                                                <i class="bi bi-arrow-right"></i>
+                                                            </button>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </th>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="table-modern">
+
+                                    <!-- Entrada Mañana -->
+                                    <tr>
+                                        <td class="fw-bold bg-light">
+                                            <i class="bi bi-sunrise"></i> Entrada Mañana
+                                            <?php if (!$bloqueado): ?>
+                                                <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="entrada_manana" title="Copiar entrada mañana del lunes a toda la semana">
+                                                    <i class="bi bi-files"></i>
+                                                </button>
+                                            <?php endif; ?>
+                                        </td>
+                                        <?php foreach ($dias as $key => $dia): ?>
+                                            <td>
+                                                <input type="time"
+                                                    class="form-control horario-input"
+                                                    name="<?= $key ?>_entrada_manana"
+                                                    value="<?= $horario[$key . '_entrada_manana'] ?>"
+                                                    <?= $bloqueado ? 'disabled' : '' ?>>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    </tr>
+
+                                    <!-- Salida Mañana -->
+                                    <tr>
+                                        <td class="fw-bold bg-light">
+                                            <i class="bi bi-sun"></i> Salida Mañana
+                                            <?php if (!$bloqueado): ?>
+                                                <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="salida_manana" title="Copiar salida mañana del lunes a toda la semana">
+                                                    <i class="bi bi-files"></i>
+                                                </button>
+                                            <?php endif; ?>
+                                        </td>
+                                        <?php foreach ($dias as $key => $dia): ?>
+                                            <td>
+                                                <input type="time"
+                                                    class="form-control horario-input"
+                                                    name="<?= $key ?>_salida_manana"
+                                                    value="<?= $horario[$key . '_salida_manana'] ?>"
+                                                    <?= $bloqueado ? 'disabled' : '' ?>>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    </tr>
+
+                                    <tr class="table-secondary">
+                                        <td class="fw-bold">Total Mañana</td>
+                                        <?php foreach ($dias as $key => $dia): ?>
+                                            <td id="<?= $key ?>_total_manana">0</td>
+                                        <?php endforeach; ?>
+                                    </tr>
+
+                                    <!-- Entrada Tarde -->
+                                    <tr>
+                                        <td class="fw-bold bg-light">
+                                            <i class="bi bi-brightness-high"></i> Entrada Tarde
+                                            <?php if (!$bloqueado): ?>
+                                                <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="entrada_tarde" title="Copiar entrada tarde del lunes a toda la semana">
+                                                    <i class="bi bi-files"></i>
+                                                </button>
+                                            <?php endif; ?>
+                                        </td>
+                                        <?php foreach ($dias as $key => $dia): ?>
+                                            <td>
+                                                <input type="time"
+                                                    class="form-control horario-input"
+                                                    name="<?= $key ?>_entrada_tarde"
+                                                    value="<?= $horario[$key . '_entrada_tarde'] ?>"
+                                                    <?= $bloqueado ? 'disabled' : '' ?>>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    </tr>
+
+                                    <!-- Salida Tarde -->
+                                    <tr>
+                                        <td class="fw-bold bg-light">
+                                            <i class="bi bi-sunset"></i> Salida Tarde
+                                            <?php if (!$bloqueado): ?>
+                                                <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="salida_tarde" title="Copiar salida tarde del lunes a toda la semana">
+                                                    <i class="bi bi-files"></i>
+                                                </button>
+                                            <?php endif; ?>
+                                        </td>
+                                        <?php foreach ($dias as $key => $dia): ?>
+                                            <td>
+                                                <input type="time"
+                                                    class="form-control horario-input"
+                                                    name="<?= $key ?>_salida_tarde"
+                                                    value="<?= $horario[$key . '_salida_tarde'] ?>"
+                                                    <?= $bloqueado ? 'disabled' : '' ?>>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    </tr>
+
+                                    <tr class="table-secondary">
+                                        <td class="fw-bold">Total Tarde</td>
+                                        <?php foreach ($dias as $key => $dia): ?>
+                                            <td id="<?= $key ?>_total_tarde">0</td>
+                                        <?php endforeach; ?>
+                                    </tr>
+
+                                    <tr class="table-primary">
+                                        <td class="fw-bold">Total Día</td>
+                                        <?php foreach ($dias as $key => $dia): ?>
+                                            <td id="<?= $key ?>_total_dia">0</td>
+                                        <?php endforeach; ?>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="text-end mt-3">
+                            <h5>
+                                <i class="bi bi-clock-history"></i>
+                                Total Semanal:
+                                <span id="total_semanal" class="badge bg-primary fs-6">0</span>
+                                horas
+                            </h5>
+
+                            <!-- VALIDACION HORAS -->
+                            <div id="mensaje_horas" class="mt-2 fw-semibold"></div>
+                        </div>
+
+
+
+                        <div class="text-end mt-3">
+                            <?php if (!$bloqueado): ?>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-save"></i> Guardar
+                                </button>
+                            <?php endif; ?>
+                        </div>
+
+                    </form>
+                </div>
             </div>
-        </th>
-    <?php endforeach; ?>
-</tr>
-</thead>
 
-<tbody>
+            <script>
+                const diasOrden = ['lun', 'mar', 'mie', 'jue', 'vie'];
 
-<!-- Entrada Mañana -->
-<tr>
-<td class="fw-bold bg-light">
-    <i class="bi bi-sunrise"></i> Entrada Mañana
-    <?php if (!$bloqueado): ?>
-        <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="entrada_manana" title="Copiar entrada mañana del lunes a toda la semana">
-            <i class="bi bi-files"></i>
-        </button>
-    <?php endif; ?>
-</td>
-<?php foreach($dias as $key => $dia): ?>
-<td>
-<input type="time"
-    class="form-control horario-input"
-    name="<?= $key ?>_entrada_manana"
-    value="<?= $horario[$key.'_entrada_manana'] ?>"
-    <?= $bloqueado ? 'disabled' : '' ?>>
-</td>
-<?php endforeach; ?>
-</tr>
+                /* =========================
+                   CALCULO ORIGINAL (NO TOCADO)
+                ========================= */
 
-<!-- Salida Mañana -->
-<tr>
-<td class="fw-bold bg-light">
-    <i class="bi bi-sun"></i> Salida Mañana
-    <?php if (!$bloqueado): ?>
-        <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="salida_manana" title="Copiar salida mañana del lunes a toda la semana">
-            <i class="bi bi-files"></i>
-        </button>
-    <?php endif; ?>
-</td>
-<?php foreach($dias as $key => $dia): ?>
-<td>
-<input type="time"
-    class="form-control horario-input"
-    name="<?= $key ?>_salida_manana"
-    value="<?= $horario[$key.'_salida_manana'] ?>"
-    <?= $bloqueado ? 'disabled' : '' ?>>
-</td>
-<?php endforeach; ?>
-</tr>
+                function calcularMinutos(inicio, fin) {
+                    if (!inicio || !fin) return 0;
 
-<tr class="table-secondary">
-<td class="fw-bold">Total Mañana</td>
-<?php foreach($dias as $key => $dia): ?>
-<td id="<?= $key ?>_total_manana">0</td>
-<?php endforeach; ?>
-</tr>
+                    let [h1, m1] = inicio.split(":");
+                    let [h2, m2] = fin.split(":");
 
-<!-- Entrada Tarde -->
-<tr>
-<td class="fw-bold bg-light">
-    <i class="bi bi-brightness-high"></i> Entrada Tarde
-    <?php if (!$bloqueado): ?>
-        <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="entrada_tarde" title="Copiar entrada tarde del lunes a toda la semana">
-            <i class="bi bi-files"></i>
-        </button>
-    <?php endif; ?>
-</td>
-<?php foreach($dias as $key => $dia): ?>
-<td>
-<input type="time"
-    class="form-control horario-input"
-    name="<?= $key ?>_entrada_tarde"
-    value="<?= $horario[$key.'_entrada_tarde'] ?>"
-    <?= $bloqueado ? 'disabled' : '' ?>>
-</td>
-<?php endforeach; ?>
-</tr>
+                    let minutosInicio = parseInt(h1) * 60 + parseInt(m1);
+                    let minutosFin = parseInt(h2) * 60 + parseInt(m2);
 
-<!-- Salida Tarde -->
-<tr>
-<td class="fw-bold bg-light">
-    <i class="bi bi-sunset"></i> Salida Tarde
-    <?php if (!$bloqueado): ?>
-        <button type="button" class="btn btn-sm btn-outline-primary ms-2 copiar-columna" data-tipo="salida_tarde" title="Copiar salida tarde del lunes a toda la semana">
-            <i class="bi bi-files"></i>
-        </button>
-    <?php endif; ?>
-</td>
-<?php foreach($dias as $key => $dia): ?>
-<td>
-<input type="time"
-    class="form-control horario-input"
-    name="<?= $key ?>_salida_tarde"
-    value="<?= $horario[$key.'_salida_tarde'] ?>"
-    <?= $bloqueado ? 'disabled' : '' ?>>
-</td>
-<?php endforeach; ?>
-</tr>
-
-<tr class="table-secondary">
-<td class="fw-bold">Total Tarde</td>
-<?php foreach($dias as $key => $dia): ?>
-<td id="<?= $key ?>_total_tarde">0</td>
-<?php endforeach; ?>
-</tr>
-
-<tr class="table-primary">
-<td class="fw-bold">Total Día</td>
-<?php foreach($dias as $key => $dia): ?>
-<td id="<?= $key ?>_total_dia">0</td>
-<?php endforeach; ?>
-</tr>
-
-</tbody>
-</table>
-</div>
-
-<div class="text-end mt-3">
-<h5>
-    <i class="bi bi-clock-history"></i>
-    Total Semanal:
-    <span id="total_semanal" class="badge bg-primary fs-6">0</span>
-    horas
-</h5>
-</div>
-
-<div class="text-end mt-3">
-<?php if (!$bloqueado): ?>
-<button type="submit" class="btn btn-success">
-    <i class="bi bi-save"></i> Guardar
-</button>
-<?php endif; ?>
-</div>
-
-</form>
-</div>
-</div>
-
-<script>
-
-const diasOrden = ['lun','mar','mie','jue','vie'];
-
-/* =========================
-   CALCULO ORIGINAL (NO TOCADO)
-========================= */
-
-function calcularMinutos(inicio, fin) {
-    if (!inicio || !fin) return 0;
-
-    let [h1, m1] = inicio.split(":");
-    let [h2, m2] = fin.split(":");
-
-    let minutosInicio = parseInt(h1)*60 + parseInt(m1);
-    let minutosFin = parseInt(h2)*60 + parseInt(m2);
-
-    return minutosFin - minutosInicio;
-}
-
-function formatearHoras(minutosTotales) {
-    if (minutosTotales <= 0) return "0:00";
-
-    let horas = Math.floor(minutosTotales / 60);
-    let minutos = minutosTotales % 60;
-
-    return horas + ":" + minutos.toString().padStart(2, '0');
-}
-
-function recalcular() {
-
-    let totalSemanal = 0;
-
-    diasOrden.forEach(dia => {
-
-        let em = document.querySelector(`[name="${dia}_entrada_manana"]`).value;
-        let sm = document.querySelector(`[name="${dia}_salida_manana"]`).value;
-        let et = document.querySelector(`[name="${dia}_entrada_tarde"]`).value;
-        let st = document.querySelector(`[name="${dia}_salida_tarde"]`).value;
-
-        let minutosManana = calcularMinutos(em, sm);
-        let minutosTarde  = calcularMinutos(et, st);
-        let minutosDia    = minutosManana + minutosTarde;
-
-        document.getElementById(`${dia}_total_manana`).innerText = formatearHoras(minutosManana);
-        document.getElementById(`${dia}_total_tarde`).innerText  = formatearHoras(minutosTarde);
-        document.getElementById(`${dia}_total_dia`).innerText    = formatearHoras(minutosDia);
-
-        totalSemanal += minutosDia;
-    });
-
-    document.getElementById("total_semanal").innerText = formatearHoras(totalSemanal);
-}
-
-document.querySelectorAll("input[type='time']")
-    .forEach(input => input.addEventListener("change", recalcular));
-
-window.onload = recalcular;
-
-/* =========================
-   COPIAR DIA COMPLETO AL SIGUIENTE
-========================= */
-
-document.querySelectorAll('.copiar-siguiente').forEach(btn => {
-
-    btn.addEventListener('click', function() {
-
-        const fromDia = this.dataset.from;
-        const index = diasOrden.indexOf(fromDia);
-
-        if (index === -1 || index === diasOrden.length - 1) return;
-
-        const toDia = diasOrden[index + 1];
-
-        ['entrada_manana','salida_manana','entrada_tarde','salida_tarde']
-        .forEach(tipo => {
-            let from = document.querySelector(`[name="${fromDia}_${tipo}"]`);
-            let to   = document.querySelector(`[name="${toDia}_${tipo}"]`);
-            if (from && to) to.value = from.value;
-        });
-
-        recalcular();
-    });
-
-});
-
-/* =========================
-   COPIAR SOLO UNA COLUMNA DESDE LUNES
-========================= */
-
-document.querySelectorAll('.copiar-columna').forEach(btn => {
-
-    btn.addEventListener('click', function() {
-
-        const tipo = this.dataset.tipo;
-
-        diasOrden.forEach(dia => {
-
-            if (dia === 'lun') return;
-
-            let from = document.querySelector(`[name="lun_${tipo}"]`);
-            let to   = document.querySelector(`[name="${dia}_${tipo}"]`);
-
-            if (from && to) to.value = from.value;
-        });
-
-        recalcular();
-    });
-
-});
-
-</script>
-
-
-        <script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const tiposOrden = [
-        'entrada_manana',
-        'salida_manana',
-        'entrada_tarde',
-        'salida_tarde'
-    ];
-
-    const inputs = Array.from(document.querySelectorAll('.horario-input'));
-
-    // Si no hay inputs editables, salir
-    const editables = inputs.filter(i => !i.disabled);
-    if (editables.length === 0) return;
-
-    inputs.forEach(input => {
-
-        input.addEventListener('keydown', function(e) {
-
-            if (e.key !== 'Tab') return;
-
-            const partes = this.name.split('_');
-            const diaActual = partes[0];
-            const tipoActual = partes.slice(1).join('_');
-
-            const indexDia = diasOrden.indexOf(diaActual);
-            const indexTipo = tiposOrden.indexOf(tipoActual);
-
-            let siguiente = null;
-
-            // =========================
-            // TAB NORMAL (↓)
-            // =========================
-            if (!e.shiftKey) {
-
-                // Bajar dentro del mismo día
-                if (indexTipo < tiposOrden.length - 1) {
-
-                    const siguienteTipo = tiposOrden[indexTipo + 1];
-
-                    siguiente = document.querySelector(
-                        `[name="${diaActual}_${siguienteTipo}"]:not([disabled])`
-                    );
-
-                } else {
-
-                    // Última fila → siguiente día
-                    if (indexDia < diasOrden.length - 1) {
-
-                        const siguienteDia = diasOrden[indexDia + 1];
-
-                        siguiente = document.querySelector(
-                            `[name="${siguienteDia}_entrada_manana"]:not([disabled])`
-                        );
-                    }
+                    return minutosFin - minutosInicio;
                 }
-            }
 
-            // =========================
-            // SHIFT + TAB (↑)
-            // =========================
-            else {
+                function formatearHoras(minutosTotales) {
+                    if (minutosTotales <= 0) return "0:00";
 
-                // Subir dentro del mismo día
-                if (indexTipo > 0) {
+                    let horas = Math.floor(minutosTotales / 60);
+                    let minutos = minutosTotales % 60;
 
-                    const anteriorTipo = tiposOrden[indexTipo - 1];
-
-                    siguiente = document.querySelector(
-                        `[name="${diaActual}_${anteriorTipo}"]:not([disabled])`
-                    );
-
-                } else {
-
-                    // Primera fila → ir al día anterior
-                    if (indexDia > 0) {
-
-                        const diaAnterior = diasOrden[indexDia - 1];
-
-                        siguiente = document.querySelector(
-                            `[name="${diaAnterior}_salida_tarde"]:not([disabled])`
-                        );
-                    }
+                    return horas + ":" + minutos.toString().padStart(2, '0');
                 }
-            }
 
-            // Si existe siguiente, cancelar comportamiento normal
-            if (siguiente) {
-                e.preventDefault();
-                siguiente.focus();
-            }
+                function recalcular() {
 
-        });
+                    let totalSemanal = 0;
 
-    });
+                    diasOrden.forEach(dia => {
 
-});
-</script>
+                        let em = document.querySelector(`[name="${dia}_entrada_manana"]`).value;
+                        let sm = document.querySelector(`[name="${dia}_salida_manana"]`).value;
+                        let et = document.querySelector(`[name="${dia}_entrada_tarde"]`).value;
+                        let st = document.querySelector(`[name="${dia}_salida_tarde"]`).value;
+
+                        let minutosManana = calcularMinutos(em, sm);
+                        let minutosTarde = calcularMinutos(et, st);
+                        let minutosDia = minutosManana + minutosTarde;
+
+                        document.getElementById(`${dia}_total_manana`).innerText = formatearHoras(minutosManana);
+                        document.getElementById(`${dia}_total_tarde`).innerText = formatearHoras(minutosTarde);
+                        document.getElementById(`${dia}_total_dia`).innerText = formatearHoras(minutosDia);
+
+                        totalSemanal += minutosDia;
+                    });
+
+                    /* =========================
+                       RESTAR 30 MIN SI PROFESOR GUIA
+                    ========================= */
+
+                    const isTeacher = document.querySelector('[name="is_teacher"]').checked;
 
 
-<!-- .HORARIO -->
+
+                    if (totalSemanal < 0) totalSemanal = 0;
+
+                    document.getElementById("total_semanal").innerText =
+                        formatearHoras(totalSemanal);
+
+                    /* =========================
+                       VALIDAR HORAS CONTRATO
+                    ========================= */
+
+                    const inputHoras = document.querySelector('[name="horas"]');
+                    const mensaje = document.getElementById("mensaje_horas");
+
+                    if (!inputHoras.value) {
+                        mensaje.innerHTML = "";
+                        return;
+                    }
+
+                    let horasContrato = parseFloat(inputHoras.value);
+
+                    if (isNaN(horasContrato)) {
+                        mensaje.innerHTML =
+                            `<span class="text-danger">Horas contrato inválidas</span>`;
+                        return;
+                    }
+
+                    let minutosContrato = horasContrato * 60;
+
+                    if (isTeacher) {
+                        minutosContrato -= 30;
+                    }
+
+                    let diferencia = totalSemanal - minutosContrato;
+
+                    if (diferencia === 0) {
+
+                        mensaje.innerHTML =
+                            `<span class="text-success">
+                <i class="bi bi-check-circle"></i>
+                Horas correctas
+            </span>`;
+
+                    } else if (diferencia > 0) {
+
+                        mensaje.innerHTML =
+                            `<span class="text-warning">
+                <i class="bi bi-exclamation-triangle"></i>
+                Sobran ${formatearHoras(diferencia)}
+            </span>`;
+
+                    } else {
+
+                        mensaje.innerHTML =
+                            `<span class="text-danger">
+                <i class="bi bi-exclamation-circle"></i>
+                Faltan ${formatearHoras(Math.abs(diferencia))}
+            </span>`;
+                    }
+                } //recalcular
+
+                document.querySelectorAll("input[type='time']")
+                    .forEach(input => input.addEventListener("change", recalcular));
+                document.querySelector('[name="horas"]')
+                    ?.addEventListener("input", recalcular);
+
+                document.querySelector('[name="is_teacher"]')
+                    ?.addEventListener("change", recalcular);
+                window.onload = recalcular;
+
+                /* =========================
+                   COPIAR DIA COMPLETO AL SIGUIENTE
+                ========================= */
+
+                document.querySelectorAll('.copiar-siguiente').forEach(btn => {
+
+                    btn.addEventListener('click', function() {
+
+                        const fromDia = this.dataset.from;
+                        const index = diasOrden.indexOf(fromDia);
+
+                        if (index === -1 || index === diasOrden.length - 1) return;
+
+                        const toDia = diasOrden[index + 1];
+
+                        ['entrada_manana', 'salida_manana', 'entrada_tarde', 'salida_tarde']
+                        .forEach(tipo => {
+                            let from = document.querySelector(`[name="${fromDia}_${tipo}"]`);
+                            let to = document.querySelector(`[name="${toDia}_${tipo}"]`);
+                            if (from && to) to.value = from.value;
+                        });
+
+                        recalcular();
+                    });
+
+                });
+
+                /* =========================
+                   COPIAR SOLO UNA COLUMNA DESDE LUNES
+                ========================= */
+
+                document.querySelectorAll('.copiar-columna').forEach(btn => {
+
+                    btn.addEventListener('click', function() {
+
+                        const tipo = this.dataset.tipo;
+
+                        diasOrden.forEach(dia => {
+
+                            if (dia === 'lun') return;
+
+                            let from = document.querySelector(`[name="lun_${tipo}"]`);
+                            let to = document.querySelector(`[name="${dia}_${tipo}"]`);
+
+                            if (from && to) to.value = from.value;
+                        });
+
+                        recalcular();
+                    });
+
+                });
+            </script>
+
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+
+                    const tiposOrden = [
+                        'entrada_manana',
+                        'salida_manana',
+                        'entrada_tarde',
+                        'salida_tarde'
+                    ];
+
+                    const inputs = Array.from(document.querySelectorAll('.horario-input'));
+
+                    // Si no hay inputs editables, salir
+                    const editables = inputs.filter(i => !i.disabled);
+                    if (editables.length === 0) return;
+
+                    inputs.forEach(input => {
+
+                        input.addEventListener('keydown', function(e) {
+
+                            if (e.key !== 'Tab') return;
+
+                            const partes = this.name.split('_');
+                            const diaActual = partes[0];
+                            const tipoActual = partes.slice(1).join('_');
+
+                            const indexDia = diasOrden.indexOf(diaActual);
+                            const indexTipo = tiposOrden.indexOf(tipoActual);
+
+                            let siguiente = null;
+
+                            // =========================
+                            // TAB NORMAL (↓)
+                            // =========================
+                            if (!e.shiftKey) {
+
+                                // Bajar dentro del mismo día
+                                if (indexTipo < tiposOrden.length - 1) {
+
+                                    const siguienteTipo = tiposOrden[indexTipo + 1];
+
+                                    siguiente = document.querySelector(
+                                        `[name="${diaActual}_${siguienteTipo}"]:not([disabled])`
+                                    );
+
+                                } else {
+
+                                    // Última fila → siguiente día
+                                    if (indexDia < diasOrden.length - 1) {
+
+                                        const siguienteDia = diasOrden[indexDia + 1];
+
+                                        siguiente = document.querySelector(
+                                            `[name="${siguienteDia}_entrada_manana"]:not([disabled])`
+                                        );
+                                    }
+                                }
+                            }
+
+                            // =========================
+                            // SHIFT + TAB (↑)
+                            // =========================
+                            else {
+
+                                // Subir dentro del mismo día
+                                if (indexTipo > 0) {
+
+                                    const anteriorTipo = tiposOrden[indexTipo - 1];
+
+                                    siguiente = document.querySelector(
+                                        `[name="${diaActual}_${anteriorTipo}"]:not([disabled])`
+                                    );
+
+                                } else {
+
+                                    // Primera fila → ir al día anterior
+                                    if (indexDia > 0) {
+
+                                        const diaAnterior = diasOrden[indexDia - 1];
+
+                                        siguiente = document.querySelector(
+                                            `[name="${diaAnterior}_salida_tarde"]:not([disabled])`
+                                        );
+                                    }
+                                }
+                            }
+
+                            // Si existe siguiente, cancelar comportamiento normal
+                            if (siguiente) {
+                                e.preventDefault();
+                                siguiente.focus();
+                            }
+
+                        });
+
+                    });
+
+                });
+            </script>
+
+
+            <!-- .HORARIO -->
+        </div>
     </div>
-</div>
-<!-- Bootstrap JS (necesario para Toast, Tooltip, Modal, etc) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<?= $this->include('components/toast') ?>
+    <!-- Bootstrap JS (necesario para Toast, Tooltip, Modal, etc) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <?= $this->include('components/toast') ?>
 </body>
+
 </html>
