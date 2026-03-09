@@ -34,12 +34,12 @@ class Admin extends BaseController
     {
         if ($redirect = $this->verificarAdmin()) return $redirect;
 
-       $userModel = new UserModel();
+        $userModel = new UserModel();
 
         $users = $userModel
-                ->select('users.*, horarios.approved, horarios.approved_at')
-                ->join('horarios', 'horarios.user_id = users.id', 'left')
-                ->findAll();
+            ->select('users.*, horarios.approved, horarios.approved_at')
+            ->join('horarios', 'horarios.user_id = users.id', 'left')
+            ->findAll();
 
         return view('admin/usuarios', [
             'users' => $users
@@ -108,7 +108,21 @@ class Admin extends BaseController
             $horarioModel->update($horario['id'], $data);
         }
 
-        return redirect()->to('/admin/horario/'.$userId)
+        return redirect()->to('/admin/horario/' . $userId)
             ->with('success', 'Horario actualizado');
+    }
+
+
+    public function imprimir($userId)
+    {
+        $horarioModel = new HorarioModel();
+
+        $horario = $horarioModel
+            ->where('user_id', $userId)
+            ->first();
+
+        return view('imprimir', [
+            'horario' => $horario
+        ]);
     }
 }

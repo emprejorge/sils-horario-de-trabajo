@@ -186,6 +186,10 @@
                     <i class="bi bi-save"></i> Guardar Horario
                 </button>
 
+                <a href="/admin/imprimir/<?= $usuario['id'] ?>" target="_blank" class="btn btn-dark mt-3">
+                    <i class="bi bi-printer"></i> Imprimir
+                </a>
+
             </div>
 
         </form>

@@ -89,4 +89,19 @@ class Horario extends BaseController
         return redirect()->to('/horario')
             ->with('success', 'Horario guardado correctamente');
     }
+
+    public function imprimir()
+    {
+        $user = session()->get('user');
+        $horarioModel = new HorarioModel();
+        $userId = $user['id'];
+
+        $horario = $horarioModel
+            ->where('user_id', $userId)
+            ->first();
+
+        return view('imprimir', [
+            'horario' => $horario
+        ]);
+    }
 }

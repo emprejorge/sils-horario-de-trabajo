@@ -213,6 +213,9 @@
             </div>
 
             <div class="text-end mt-3">
+                <a href="/horario/imprimir" target="_blank" class="btn btn-dark">
+                    <i class="bi bi-printer"></i> Imprimir
+                </a>
                 <?php if (!$bloqueado): ?>
                     <button type="submit" class="btn btn-success">
                         <i class="bi bi-save"></i> Guardar
