@@ -39,6 +39,7 @@ class Admin extends BaseController
         $users = $userModel
             ->select('users.*, horarios.approved, horarios.approved_at')
             ->join('horarios', 'horarios.user_id = users.id', 'left')
+            ->orderBy('users.last_name', 'ASC')
             ->findAll();
 
         return view('admin/usuarios', [
