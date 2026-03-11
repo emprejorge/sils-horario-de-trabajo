@@ -8,24 +8,27 @@ $dias = [
     'vie' => 'Viernes'
 ];
 
-function minutos($inicio, $fin)
+function calcularMinutos($inicio, $fin)
 {
     if (!$inicio || !$fin) return 0;
 
     [$h1, $m1] = explode(':', $inicio);
     [$h2, $m2] = explode(':', $fin);
 
-    return ($h2 * 60 + $m2) - ($h1 * 60 + $m1);
+    $inicioMin = $h1 * 60 + $m1;
+    $finMin = $h2 * 60 + $m2;
+
+    return $finMin - $inicioMin;
 }
 
-function horas($min)
+function formatearHoras($min)
 {
     if ($min <= 0) return "0:00";
 
     $h = floor($min / 60);
     $m = $min % 60;
 
-    return $h . ":" . str_pad($m, 2, "0", STR_PAD_LEFT);
+    return $h . ":" . str_pad($m, 2, '0', STR_PAD_LEFT);
 }
 
 $totalSemanal = 0;
@@ -59,18 +62,11 @@ $totalSemanal = 0;
             margin-bottom: 25px;
         }
 
-        .header h3 {
-            margin: 0;
-        }
-
         .info {
             margin-bottom: 20px;
         }
 
-        .table th {
-            text-align: center;
-        }
-
+        .table th,
         .table td {
             text-align: center;
         }
@@ -84,14 +80,10 @@ $totalSemanal = 0;
         }
 
         .firma-linea {
-            border-top: 1px solid black;
-            width: 250px;
+            border-top: 1px solid #000;
+            width: 260px;
             margin: auto;
             margin-top: 60px;
-        }
-
-        .no-print {
-            display: none;
         }
     </style>
 
@@ -106,26 +98,21 @@ $totalSemanal = 0;
         <div class="header">
 
             <h3><strong>SCUOLA ITALIANA LA SERENA</strong></h3>
+            <p>Sistema de Registro de Horas Laborales</p>
 
-            <p>
-                Sistema de Registro de Horas Laborales
-            </p>
-
-            <h5 class="mt-3">
-                Horario de Trabajo
-            </h5>
+            <h5 class="mt-3">Horario de Trabajo</h5>
 
         </div>
 
 
-        <!-- INFORMACION FUNCIONARIO -->
+        <!-- INFO FUNCIONARIO -->
 
         <div class="row info">
 
             <div class="col-6">
 
                 <strong>Funcionario:</strong><br>
-                <?= session()->get('user')['name'] ?>
+                <?= $usuario['first_name'] ?> <?= $usuario['last_name'] ?>
 
             </div>
 
@@ -153,7 +140,6 @@ $totalSemanal = 0;
             <thead class="table-light">
 
                 <tr>
-
                     <th></th>
 
                     <?php foreach ($dias as $dia): ?>
@@ -168,6 +154,8 @@ $totalSemanal = 0;
 
             <tbody>
 
+                <!-- ENTRADA MAÑANA -->
+
                 <tr>
 
                     <td><strong>Entrada Mañana</strong></td>
@@ -179,6 +167,8 @@ $totalSemanal = 0;
                     <?php endforeach ?>
 
                 </tr>
+
+                <!-- SALIDA MAÑANA -->
 
                 <tr>
 
@@ -192,24 +182,28 @@ $totalSemanal = 0;
 
                 </tr>
 
+                <!-- TOTAL MAÑANA -->
+
                 <tr class="table-secondary">
 
                     <td><strong>Total Mañana</strong></td>
 
                     <?php foreach ($dias as $key => $dia):
 
-                        $m = minutos(
+                        $minManana = calcularMinutos(
                             $horario[$key . '_entrada_manana'],
                             $horario[$key . '_salida_manana']
                         );
 
                     ?>
 
-                        <td><?= horas($m) ?></td>
+                        <td><?= formatearHoras($minManana) ?></td>
 
                     <?php endforeach ?>
 
                 </tr>
+
+                <!-- ENTRADA TARDE -->
 
                 <tr>
 
@@ -223,6 +217,8 @@ $totalSemanal = 0;
 
                 </tr>
 
+                <!-- SALIDA TARDE -->
+
                 <tr>
 
                     <td><strong>Salida Tarde</strong></td>
@@ -235,24 +231,28 @@ $totalSemanal = 0;
 
                 </tr>
 
+                <!-- TOTAL TARDE -->
+
                 <tr class="table-secondary">
 
                     <td><strong>Total Tarde</strong></td>
 
                     <?php foreach ($dias as $key => $dia):
 
-                        $t = minutos(
+                        $minTarde = calcularMinutos(
                             $horario[$key . '_entrada_tarde'],
                             $horario[$key . '_salida_tarde']
                         );
 
                     ?>
 
-                        <td><?= horas($t) ?></td>
+                        <td><?= formatearHoras($minTarde) ?></td>
 
                     <?php endforeach ?>
 
                 </tr>
+
+                <!-- TOTAL DIA -->
 
                 <tr class="table-primary">
 
@@ -260,23 +260,23 @@ $totalSemanal = 0;
 
                     <?php foreach ($dias as $key => $dia):
 
-                        $m = minutos(
+                        $minManana = calcularMinutos(
                             $horario[$key . '_entrada_manana'],
                             $horario[$key . '_salida_manana']
                         );
 
-                        $t = minutos(
+                        $minTarde = calcularMinutos(
                             $horario[$key . '_entrada_tarde'],
                             $horario[$key . '_salida_tarde']
                         );
 
-                        $d = $m + $t;
+                        $minDia = $minManana + $minTarde;
 
-                        $totalSemanal += $d;
+                        $totalSemanal += $minDia;
 
                     ?>
 
-                        <td><strong><?= horas($d) ?></strong></td>
+                        <td><strong><?= formatearHoras($minDia) ?></strong></td>
 
                     <?php endforeach ?>
 
@@ -289,20 +289,47 @@ $totalSemanal = 0;
 
         <?php
 
+        $minContrato = $horario['horas'] * 60;
+
         if ($horario['is_teacher']) {
-            $totalSemanal -= 30;
+            $minContrato -= 30;
         }
+
+        $diferencia = $totalSemanal - $minContrato;
 
         ?>
 
-        <div class="text-end mt-3">
+        <!-- TOTALES -->
+
+        <div class="text-end mt-4">
 
             <h5>
 
-                Total semanal:
-                <strong><?= horas($totalSemanal) ?></strong>
+                Total semanal trabajado:
+
+                <strong><?= formatearHoras($totalSemanal) ?></strong>
 
             </h5>
+
+            <?php if ($diferencia == 0): ?>
+
+                <span class="text-success fw-bold">
+                    ✔ Horas correctas
+                </span>
+
+            <?php elseif ($diferencia > 0): ?>
+
+                <span class="text-warning fw-bold">
+                    Sobran <?= formatearHoras($diferencia) ?>
+                </span>
+
+            <?php else: ?>
+
+                <span class="text-danger fw-bold">
+                    Faltan <?= formatearHoras(abs($diferencia)) ?>
+                </span>
+
+            <?php endif ?>
 
         </div>
 
@@ -329,11 +356,12 @@ $totalSemanal = 0;
 
         </div>
 
-
     </div>
 
 
     <script>
+        /* imprimir automaticamente */
+
         window.onload = function() {
 
             setTimeout(function() {
@@ -344,7 +372,7 @@ $totalSemanal = 0;
 
         };
 
-        /* cerrar ventana despues de imprimir */
+        /* cerrar ventana luego de imprimir */
 
         window.onafterprint = function() {
 

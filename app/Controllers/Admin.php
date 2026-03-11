@@ -117,13 +117,16 @@ class Admin extends BaseController
     public function imprimir($userId)
     {
         $horarioModel = new HorarioModel();
+        $userModel = new UserModel();
 
+        $usuario = $userModel->find($userId);
         $horario = $horarioModel
             ->where('user_id', $userId)
             ->first();
 
         return view('imprimir', [
-            'horario' => $horario
+            'horario' => $horario,
+            'usuario' => $usuario
         ]);
     }
 }
