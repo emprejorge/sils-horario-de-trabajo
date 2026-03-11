@@ -85,6 +85,37 @@ $totalSemanal = 0;
             margin: auto;
             margin-top: 60px;
         }
+
+        .table-wrapper {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .table thead {
+            background: #2e6f87;
+            color: white;
+        }
+
+        .table-secondary {
+            background: #e9ecef !important;
+        }
+
+        .table-primary {
+            background: #d6ecf3 !important;
+            font-weight: bold;
+        }
+
+        /* asegurar que los colores se impriman */
+
+        @media print {
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+        }
     </style>
 
 </head>
@@ -135,157 +166,158 @@ $totalSemanal = 0;
 
         <!-- TABLA HORARIO -->
 
-        <table class="table table-bordered">
+        <div class="table-wrapper">
+            <table class="table table-bordered mb-0">
 
-            <thead class="table-light">
+                <thead class="table-light">
 
-                <tr>
-                    <th></th>
+                    <tr>
+                        <th></th>
 
-                    <?php foreach ($dias as $dia): ?>
+                        <?php foreach ($dias as $dia): ?>
 
-                        <th><?= $dia ?></th>
+                            <th><?= $dia ?></th>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                </tr>
+                    </tr>
 
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
 
-                <!-- ENTRADA MAÑANA -->
+                    <!-- ENTRADA MAÑANA -->
 
-                <tr>
+                    <tr>
 
-                    <td><strong>Entrada Mañana</strong></td>
+                        <td><strong>Entrada Mañana</strong></td>
 
-                    <?php foreach ($dias as $key => $dia): ?>
+                        <?php foreach ($dias as $key => $dia): ?>
 
-                        <td><?= $horario[$key . '_entrada_manana'] ?></td>
+                            <td><?= $horario[$key . '_entrada_manana'] ?></td>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                </tr>
+                    </tr>
 
-                <!-- SALIDA MAÑANA -->
+                    <!-- SALIDA MAÑANA -->
 
-                <tr>
+                    <tr>
 
-                    <td><strong>Salida Mañana</strong></td>
+                        <td><strong>Salida Mañana</strong></td>
 
-                    <?php foreach ($dias as $key => $dia): ?>
+                        <?php foreach ($dias as $key => $dia): ?>
 
-                        <td><?= $horario[$key . '_salida_manana'] ?></td>
+                            <td><?= $horario[$key . '_salida_manana'] ?></td>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                </tr>
+                    </tr>
 
-                <!-- TOTAL MAÑANA -->
+                    <!-- TOTAL MAÑANA -->
 
-                <tr class="table-secondary">
+                    <tr class="table-secondary">
 
-                    <td><strong>Total Mañana</strong></td>
+                        <td><strong>Total Mañana</strong></td>
 
-                    <?php foreach ($dias as $key => $dia):
+                        <?php foreach ($dias as $key => $dia):
 
-                        $minManana = calcularMinutos(
-                            $horario[$key . '_entrada_manana'],
-                            $horario[$key . '_salida_manana']
-                        );
+                            $minManana = calcularMinutos(
+                                $horario[$key . '_entrada_manana'],
+                                $horario[$key . '_salida_manana']
+                            );
 
-                    ?>
+                        ?>
 
-                        <td><?= formatearHoras($minManana) ?></td>
+                            <td><?= formatearHoras($minManana) ?></td>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                </tr>
+                    </tr>
 
-                <!-- ENTRADA TARDE -->
+                    <!-- ENTRADA TARDE -->
 
-                <tr>
+                    <tr>
 
-                    <td><strong>Entrada Tarde</strong></td>
+                        <td><strong>Entrada Tarde</strong></td>
 
-                    <?php foreach ($dias as $key => $dia): ?>
+                        <?php foreach ($dias as $key => $dia): ?>
 
-                        <td><?= $horario[$key . '_entrada_tarde'] ?></td>
+                            <td><?= $horario[$key . '_entrada_tarde'] ?></td>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                </tr>
+                    </tr>
 
-                <!-- SALIDA TARDE -->
+                    <!-- SALIDA TARDE -->
 
-                <tr>
+                    <tr>
 
-                    <td><strong>Salida Tarde</strong></td>
+                        <td><strong>Salida Tarde</strong></td>
 
-                    <?php foreach ($dias as $key => $dia): ?>
+                        <?php foreach ($dias as $key => $dia): ?>
 
-                        <td><?= $horario[$key . '_salida_tarde'] ?></td>
+                            <td><?= $horario[$key . '_salida_tarde'] ?></td>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                </tr>
+                    </tr>
 
-                <!-- TOTAL TARDE -->
+                    <!-- TOTAL TARDE -->
 
-                <tr class="table-secondary">
+                    <tr class="table-secondary">
 
-                    <td><strong>Total Tarde</strong></td>
+                        <td><strong>Total Tarde</strong></td>
 
-                    <?php foreach ($dias as $key => $dia):
+                        <?php foreach ($dias as $key => $dia):
 
-                        $minTarde = calcularMinutos(
-                            $horario[$key . '_entrada_tarde'],
-                            $horario[$key . '_salida_tarde']
-                        );
+                            $minTarde = calcularMinutos(
+                                $horario[$key . '_entrada_tarde'],
+                                $horario[$key . '_salida_tarde']
+                            );
 
-                    ?>
+                        ?>
 
-                        <td><?= formatearHoras($minTarde) ?></td>
+                            <td><?= formatearHoras($minTarde) ?></td>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                </tr>
+                    </tr>
 
-                <!-- TOTAL DIA -->
+                    <!-- TOTAL DIA -->
 
-                <tr class="table-primary">
+                    <tr class="table-primary">
 
-                    <td><strong>Total Día</strong></td>
+                        <td><strong>Total Día</strong></td>
 
-                    <?php foreach ($dias as $key => $dia):
+                        <?php foreach ($dias as $key => $dia):
 
-                        $minManana = calcularMinutos(
-                            $horario[$key . '_entrada_manana'],
-                            $horario[$key . '_salida_manana']
-                        );
+                            $minManana = calcularMinutos(
+                                $horario[$key . '_entrada_manana'],
+                                $horario[$key . '_salida_manana']
+                            );
 
-                        $minTarde = calcularMinutos(
-                            $horario[$key . '_entrada_tarde'],
-                            $horario[$key . '_salida_tarde']
-                        );
+                            $minTarde = calcularMinutos(
+                                $horario[$key . '_entrada_tarde'],
+                                $horario[$key . '_salida_tarde']
+                            );
 
-                        $minDia = $minManana + $minTarde;
+                            $minDia = $minManana + $minTarde;
 
-                        $totalSemanal += $minDia;
+                            $totalSemanal += $minDia;
 
-                    ?>
+                        ?>
 
-                        <td><strong><?= formatearHoras($minDia) ?></strong></td>
+                            <td><strong><?= formatearHoras($minDia) ?></strong></td>
 
-                    <?php endforeach ?>
+                        <?php endforeach ?>
 
-                </tr>
+                    </tr>
 
-            </tbody>
+                </tbody>
 
-        </table>
-
+            </table>
+        </div>
 
         <?php
 
