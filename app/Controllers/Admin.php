@@ -128,5 +128,36 @@ class Admin extends BaseController
             'horario' => $horario,
             'usuario' => $usuario
         ]);
-    }
+    } //.imprimir
+
+    public function imprimirTodos()
+    {
+        $userModel = new UserModel();
+        $horarioModel = new HorarioModel();
+
+        $usuarios = $userModel
+            ->orderBy('last_name', 'ASC')
+            ->findAll();
+
+        $lista = [];
+
+        foreach ($usuarios as $usuario) {
+
+            $horario = $horarioModel
+                ->where('user_id', $usuario['id'])
+                ->first();
+
+            if ($horario) {
+
+                $lista[] = [
+                    'usuario' => $usuario,
+                    'horario' => $horario
+                ];
+            }
+        }
+
+        return view('admin/imprimir_todos', [
+            'lista' => $lista
+        ]);
+    } //.imprimirTodos
 }

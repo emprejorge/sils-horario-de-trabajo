@@ -25,4 +25,5 @@ $routes->group('admin', ['filter' => 'admin'], function ($routes) {
     $routes->get('horario/(:num)', 'Admin::verHorario/$1');
     $routes->post('horario/save/(:num)', 'Admin::guardarHorario/$1');
     $routes->get('imprimir/(:num)', 'Admin::imprimir/$1');
+    $routes->get('imprimir-todos', 'Admin::imprimirTodos');
 });

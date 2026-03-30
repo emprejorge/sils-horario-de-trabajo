@@ -94,14 +94,18 @@ class Horario extends BaseController
     {
         $user = session()->get('user');
         $horarioModel = new HorarioModel();
+        $userModel = new \App\Models\UserModel();
         $userId = $user['id'];
 
         $horario = $horarioModel
             ->where('user_id', $userId)
             ->first();
 
+        $usuario = $userModel->find($userId);
+
         return view('imprimir', [
-            'horario' => $horario
+            'horario' => $horario,
+            'usuario' => $usuario
         ]);
     }
 }

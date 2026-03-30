@@ -4,14 +4,16 @@
 
 <h3 class="mb-3">Lista de Usuarios</h3>
 
-<!-- BUSCADOR -->
+<!-- BUSCADOR + IMPRIMIR TODOS -->
 
-<div class="row mb-3">
+<div class="row mb-3 align-items-center">
+
     <div class="col-md-4">
         <div class="input-group">
             <span class="input-group-text">
                 <i class="bi bi-search"></i>
             </span>
+
             <input
                 type="text"
                 id="buscarUsuario"
@@ -19,6 +21,20 @@
                 placeholder="Buscar usuario...">
         </div>
     </div>
+
+    <div class="col-md-8 text-end">
+
+        <a href="<?= base_url('admin/imprimir-todos') ?>"
+            target="_blank"
+            class="btn btn-dark">
+
+            <i class="bi bi-printer"></i>
+            Imprimir todos los horarios
+
+        </a>
+
+    </div>
+
 </div>
 
 <table class="table table-hover align-middle" id="tablaUsuarios">
@@ -121,8 +137,6 @@
 
 
 <script>
-    /* BUSCADOR EN VIVO */
-
     document.getElementById("buscarUsuario").addEventListener("keyup", function() {
 
         let filtro = this.value.toLowerCase();
