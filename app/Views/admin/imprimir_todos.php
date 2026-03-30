@@ -133,7 +133,7 @@ $totalSemanal = 0;
 
         <div class="page">
 
-            <?= view('imprimir', [
+            <?= view('admin/imprimir', [
                 'usuario' => $item['usuario'],
                 'horario' => $item['horario'],
                 'dias' => $dias,
