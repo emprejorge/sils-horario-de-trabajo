@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Sistema de Gestión de Horarios</title>
@@ -36,7 +37,7 @@
     <meta name="twitter:description" content="Plataforma institucional diseñada para registrar, revisar y aprobar horarios laborales de manera eficiente. Garantiza control administrativo y validación oficial.">
     <meta name="twitter:image" content="https://scuolaitalianalaserena.cl/logos/scuola-whatsapp.jpg">
 
-    
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -68,7 +69,7 @@
             position: absolute;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(59,130,246,0.3), transparent 70%);
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent 70%);
             top: -150px;
             right: -150px;
         }
@@ -80,7 +81,7 @@
 
         .left-panel p {
             margin-top: 20px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
             max-width: 420px;
         }
 
@@ -105,7 +106,7 @@
             padding: 50px 40px;
             width: 100%;
             max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
             animation: fadeIn 0.8s ease;
         }
 
@@ -139,7 +140,7 @@
         .google-btn:hover {
             background: #f1f5f9;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
         }
 
         .google-icon {
@@ -153,9 +154,35 @@
             text-align: center;
         }
 
+        .legal-links {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .legal-links a {
+            color: #64748b;
+            text-decoration: none;
+            border-bottom: 1px solid #cbd5e1;
+            transition: color 0.2s ease;
+        }
+
+        .legal-links a:hover {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* RESPONSIVE */
@@ -176,53 +203,61 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="split-container">
+    <div class="split-container">
 
-    <!-- PANEL IZQUIERDO -->
-    <div class="left-panel">
-        <h1>Sistema de registro de<br/>horas laborales</h1>
-        <p>
-            Plataforma institucional diseñada para registrar,
-            revisar y aprobar horarios laborales de manera eficiente.
-            Garantiza control administrativo y validación oficial.
-        </p>
+        <!-- PANEL IZQUIERDO -->
+        <div class="left-panel">
+            <h1>Sistema de registro de<br />horas laborales</h1>
+            <p>
+                Plataforma institucional diseñada para registrar,
+                revisar y aprobar horarios laborales de manera eficiente.
+                Garantiza control administrativo y validación oficial.
+            </p>
 
-        <!-- Ilustración -->
-        <div class="illustration text-left">
-            <i class="bi bi-calendar2-check"
-            style="font-size: 50px; color: #3b82f6;"></i>
-        </div>
-    </div>
-
-    <!-- PANEL DERECHO -->
-    <div class="right-panel">
-        <div class="login-card text-center">
-
-            <!-- LOGO PLACEHOLDER 109x146 -->
-            <div class="institution-logo">
-                <img src="https://www.scuolaitalianalaserena.cl/logos/logo-chico-fondo-blanco.jpg">
-                
+            <!-- Ilustración -->
+            <div class="illustration text-left">
+                <i class="bi bi-calendar2-check"
+                    style="font-size: 50px; color: #3b82f6;"></i>
             </div>
-
-            <h5 class="mb-3 fw-semibold">Acceso Institucional</h5>
-
-            <a href="/auth/google" class="google-btn text-decoration-none">
-                <img class="google-icon"
-                     src="https://www.svgrepo.com/show/475656/google-color.svg"
-                     alt="Google Logo">
-                Ingresar con Google
-            </a>
-
-            <div class="footer-text">
-                Acceso exclusivo para personal de la <br/>Scuola Italiana de La Serena
-            </div>
-
         </div>
-    </div>
 
-</div>
+        <!-- PANEL DERECHO -->
+        <div class="right-panel">
+            <div class="login-card text-center">
+
+                <!-- LOGO PLACEHOLDER 109x146 -->
+                <div class="institution-logo">
+                    <img src="https://www.scuolaitalianalaserena.cl/logos/logo-chico-fondo-blanco.jpg">
+
+                </div>
+
+                <h5 class="mb-3 fw-semibold">Acceso Institucional</h5>
+
+                <a href="/auth/google" class="google-btn text-decoration-none">
+                    <img class="google-icon"
+                        src="https://www.svgrepo.com/show/475656/google-color.svg"
+                        alt="Google Logo">
+                    Ingresar con Google
+                </a>
+
+                <div class="footer-text">
+                    Acceso exclusivo para personal de la <br />Scuola Italiana de La Serena
+                </div>
+
+                <div class="legal-links">
+                    <a href="https://horas.scuolaitalianalaserena.cl/index.php/privacidad" target="_blank">Política de Privacidad</a>
+                    &nbsp;·&nbsp;
+                    <a href="https://horas.scuolaitalianalaserena.cl/index.php/terminos" target="_blank">Términos y Condiciones</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
 </body>
+
 </html>

@@ -10,6 +10,8 @@ $routes->get('login', 'Auth::login');
 $routes->get('auth/google', 'Auth::google');
 $routes->get('auth/google/callback', 'Auth::callback');
 $routes->get('logout', 'Auth::logout');
+$routes->view('/privacidad', 'privacidad');
+$routes->view('/terminos', 'terminos');
 
 $routes->get('dashboard', 'Dashboard::index', ['filter' => 'auth']);
 
